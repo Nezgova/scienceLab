@@ -1,0 +1,133 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #0B192C;
+    color: #FFFFFF;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #0B192C;
+    padding: 1rem 2rem;
+    color: white;
+    width: 100%;
+}
+
+.navbar .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #3E92CC;
+    text-transform: uppercase;
+}
+
+.navbar .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.navbar .nav-links li {
+    display: inline;
+}
+
+.navbar .nav-links a {
+    text-decoration: none;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.navbar .nav-links a:hover {
+    background-color: #3E92CC;
+    color: white;
+}
+
+/* Profile Section */
+.profile-container {
+    background: #112240;
+    border-radius: 10px;
+    padding: 30px;
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    margin-top: 40px;
+}
+
+.profile-container h1 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+}
+
+.profile-pic {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    border: 2px solid #64ffda;
+    transition: transform 0.3s;
+}
+
+.profile-pic:hover {
+    transform: scale(1.1);
+}
+
+.profile-info form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.profile-info label {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 8px;
+}
+
+.profile-info input,
+.profile-info select,
+.profile-info textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 2px solid #64ffda;
+    border-radius: 5px;
+    background: #1C2A44;
+    color: #FFF;
+}
+
+.profile-info button {
+    padding: 10px 20px;
+    background-color: #64ffda;
+    border: none;
+    border-radius: 5px;
+    color: #0B192C;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.profile-info button:hover {
+    background-color: #52e6c6;
+}
+
+.back-link {
+    margin-top: 20px;
+    display: inline-block;
+    text-decoration: none;
+    color: #64ffda;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}

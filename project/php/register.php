@@ -1,36 +1,29 @@
 <?php
-require 'db.php'; // Include the database connection
+require 'db.php';
 
-$errors = []; // Array to hold error messages
+$errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email']);
     $password = trim($_POST['password']);
     $confirm_password = trim($_POST['confirm_password']);
-
-    // Extract username from email
     $username = explode('@', $email)[0];
 
-    // Validation: Check if email ends with @emsi.ma
     if (!str_ends_with($email, '@emsi.ma')) {
         $errors[] = "The email must end with '@emsi.ma'.";
     }
 
-    // Validation: Check if passwords match
     if ($password !== $confirm_password) {
         $errors[] = "Passwords do not match.";
     }
 
-    // Validation: Ensure fields are not empty
     if (empty($email) || empty($password) || empty($confirm_password)) {
         $errors[] = "All fields are required.";
     }
 
     if (empty($errors)) {
-        // Hash the password
         $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
-        // Insert the user into the database
         $sql = "INSERT INTO users (email, username, password) VALUES (:email, :username, :password)";
         $stmt = $pdo->prepare($sql);
 
@@ -40,14 +33,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':username' => $username,
                 ':password' => $hashed_password,
             ]);
-            header('Location: login.php'); // Redirect to login page after successful registration
+            header('Location: login.php');
             exit;
         } catch (PDOException $e) {
-            if ($e->getCode() === '23000') { // Duplicate entry error code
-                $errors[] = "An account with this email already exists.";
-            } else {
-                $errors[] = "An error occurred: " . $e->getMessage();
-            }
+            $errors[] = $e->getCode() === '23000' ? "An account with this email already exists." : "An error occurred: " . $e->getMessage();
         }
     }
 }
@@ -58,26 +47,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../style/login.css">
     <title>Register</title>
+    <style><?php include '../style/login.css'; ?></style>
 </head>
 <body>
-    <div class="form-container">
-        <h1>Register</h1>
+    <div class="login-box">
+        <h2>Register</h2>
         <?php if (!empty($errors)): ?>
             <div class="error-messages">
                 <?php foreach ($errors as $error): ?>
-                    <p><?= htmlspecialchars($error) ?></p>
+                    <p style="color: #ff4d4d;"><?= htmlspecialchars($error) ?></p>
                 <?php endforeach; ?>
             </div>
         <?php endif; ?>
         <form action="register.php" method="POST">
-            <input type="email" name="email" placeholder="Email (must end with @emsi.ma)" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <input type="password" name="confirm_password" placeholder="Confirm Password" required>
-            <button type="submit">Register</button>
+            <div class="user-box">
+                <input type="email" name="email" required>
+                <label>Email (must end with @emsi.ma)</label>
+            </div>
+            <div class="user-box">
+                <input type="password" name="password" required>
+                <label>Password</label>
+            </div>
+            <div class="user-box">
+                <input type="password" name="confirm_password" required>
+                <label>Confirm Password</label>
+            </div>
+            <a href="#" onclick="this.closest('form').submit(); return false;">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>Register
+            </a>
         </form>
-        <p>Already have an account? <a href="login.php">Login here</a>.</p>
+        <p style="color: white; text-align: center;">Already have an account? <a href="login.php" style="color: #fff;">Login here</a>.</p>
     </div>
 </body>
 </html>

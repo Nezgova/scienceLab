@@ -1,5 +1,5 @@
 <?php
-require 'db.php';
+require 'db.php';  // Include the updated db.php
 
 $errors = [];
 
@@ -24,6 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errors)) {
         $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
+        // Use the $pdo object to interact with the database
         $sql = "INSERT INTO users (email, username, password) VALUES (:email, :username, :password)";
         $stmt = $pdo->prepare($sql);
 
@@ -41,6 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

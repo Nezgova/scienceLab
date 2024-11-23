@@ -104,22 +104,11 @@ body {
     border-color: #B0C4DE;
 }
 
-/* Logout Link */
-.logout a {
-    font-weight: bold;
-    color: #3E92CC;
-    transition: color 0.3s;
-}
-
-.logout a:hover {
-    color: #B0C4DE;
-}
-
 /* Main Content Styling */
 .main-content {
     padding: 2rem;
     text-align: center;
-    min-height: 90vh; /* Fills screen space below navbar */
+    min-height: 70vh;
 }
 
 .main-content h1 {
@@ -134,56 +123,90 @@ body {
     color: #B0C4DE;
 }
 
-/* Form Styling */
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+/* Dashboard Section Styling */
+.articles-section {
+    padding: 2rem;
+    text-align: center;
+    background-color: #1C2A44;
     margin-top: 20px;
 }
 
-.form-group {
+.articles-section h2 {
+    font-size: 2rem;
+    color: #64FFDA;
+    margin-bottom: 1.5rem;
+}
+
+.articles-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.article {
+    background-color: #2E3C52;
+    padding: 1rem;
+    width: 300px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
-    text-align: left;
+    align-items: center;
+    justify-content: center;
 }
 
-.form-group label {
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #ffffff;
+.article h3 {
+    font-size: 1.5rem;
+    color: #3E92CC;
+    margin-bottom: 10px;
 }
 
-.form-group input {
-    padding: 10px;
-    border: 2px solid #64ffda;
-    border-radius: 5px;
-    background-color: #1C2A44;
-    color: #ffffff;
+.article p {
+    font-size: 1.1rem;
+    color: #B0C4DE;
+    margin-bottom: 15px;
+    text-align: center;
 }
 
-/* Button Styling */
-.button {
+.vote-btn {
+    background-color: #3E92CC;
+    color: white;
     padding: 10px 20px;
-    font-size: 16px;
-    font-weight: bold;
-    background-color: #64ffda;
-    color: #0B192C;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background 0.3s;
+    margin: 0.5rem;
+}
+
+.vote-btn:hover {
+    background-color: #64FFDA;
+}
+
+.vote-btn:disabled {
+    background-color: #B0C4DE;
+    cursor: not-allowed;
+}
+
+.vote-count {
+    font-size: 1.2rem;
+    color: #64FFDA;
+    margin-top: 10px;
+}
+
+/* Button Styling (Submit Button) */
+.button {
+    background-color: #3E92CC;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 20px;
 }
 
 .button:hover {
-    background-color: #52e6c6;
-}
-
-/* Message */
-.message {
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #3E92CC;
-    color: white;
-    border-radius: 5px;
+    background-color: #64FFDA;
 }

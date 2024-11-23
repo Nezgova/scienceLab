@@ -1,32 +1,30 @@
 <?php
-require 'db.php'; // Adjust this path if needed
-
 session_start();
+require_once('config.php');
 
-// Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
 
-// Get user ID from session
 $user_id = $_SESSION['user_id'];
 
-// Fetch user profile data from the database
-$stmt = $pdo->prepare("SELECT username, email, profile_picture, description, sex FROM users WHERE id = ?");
-$stmt->execute([$user_id]);
-$user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-// For the logout hover tooltip
-$username = $user['username'];
+// Fetch user profile data
+$query = "SELECT username, email, profile_picture, description, sex, specialties, interests FROM users WHERE id = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Handle profile update
     $description = $_POST['description'];
     $sex = $_POST['sex'];
+    $specialties = implode(',', $_POST['specialties'] ?? []); // Handle specialties
+    $interests = implode(',', $_POST['interests'] ?? []); // Handle interests
     $profile_picture = $user['profile_picture'];
 
-    // Handle file upload if a new profile picture is provided
+    // Handle file upload for profile picture
     if (!empty($_FILES['profile_picture']['name'])) {
         $target_dir = "../attachments/";
         $target_file = $target_dir . basename($_FILES['profile_picture']['name']);
@@ -34,9 +32,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $profile_picture = "attachments/" . basename($_FILES['profile_picture']['name']);
     }
 
-    // Update user data in the database
-    $update_stmt = $pdo->prepare("UPDATE users SET profile_picture = ?, description = ?, sex = ? WHERE id = ?");
-    $update_stmt->execute([$profile_picture, $description, $sex, $user_id]);
+    // Update user data
+    $update_stmt = $conn->prepare("UPDATE users SET profile_picture = ?, description = ?, sex = ?, specialties = ?, interests = ? WHERE id = ?");
+    $update_stmt->bind_param("sssssi", $profile_picture, $description, $sex, $specialties, $interests, $user_id);
+    $update_stmt->execute();
 
     header("Location: profile.php");
     exit();
@@ -50,29 +49,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
     <link rel="stylesheet" href="../style/profile.css">
-    <link rel="stylesheet" href="../style/home.css"> <!-- Include shared navbar styles -->
 </head>
 <body>
-    <!-- Navbar -->
     <nav class="navbar">
         <div class="logo">Lab Portal</div>
         <ul class="nav-links">
             <li><a href="home.php">Home</a></li>
             <li><a href="about.php">About</a></li>
             <li><a href="profile.php">Profile</a></li>
-            <li class="profile-pic-container" title="Logout (<?= htmlspecialchars($username); ?>)">
-                <a href="logout.php">
-                    <img src="../<?= htmlspecialchars($user['profile_picture'] ?: 'attachments/default.png'); ?>" alt="Profile Picture" class="profile-pic">
-                </a>
-            </li>
         </ul>
+        <!-- Profile Picture as Logout Button -->
+       <!-- Profile Picture in Navbar (Logout Button) -->
+<a href="logout.php">
+    <img src="../<?= htmlspecialchars($user['profile_picture'] ?: 'attachments/1.png'); ?>" alt="Logout" class="profile-pic-navbar">  </a>
     </nav>
 
     <div class="profile-container">
         <h1>Welcome, <?= htmlspecialchars($user['username']); ?>!</h1>
 
-        <div class="profile-info">
-            <img src="../<?= htmlspecialchars($user['profile_picture'] ?: 'attachments/default.png'); ?>" alt="Profile Picture" class="profile-pic">
+        <!-- Profile Picture in Profile Section -->
+<img src="../<?= htmlspecialchars($user['profile_picture'] ?: 'attachments/2.png'); ?>" alt="Profile Picture" class="profile-pic-large">
+
             <form method="POST" enctype="multipart/form-data">
                 <label for="profile_picture">Change Profile Picture:</label>
                 <input type="file" name="profile_picture" id="profile_picture">
@@ -84,14 +81,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <select name="sex" id="sex">
                     <option value="Male" <?= $user['sex'] === 'Male' ? 'selected' : ''; ?>>Male</option>
                     <option value="Female" <?= $user['sex'] === 'Female' ? 'selected' : ''; ?>>Female</option>
-                    <option value="Other" <?= $user['sex'] === 'Other' ? 'selected' : ''; ?>>Other</option>
+                </select>
+
+                <label for="specialties">Specialties:</label>
+                <select name="specialties[]" id="specialties" multiple>
+                    <option value="AI" <?= in_array('AI', explode(',', $user['specialties'])) ? 'selected' : ''; ?>>AI</option>
+                    <option value="Cybersecurity" <?= in_array('Cybersecurity', explode(',', $user['specialties'])) ? 'selected' : ''; ?>>Cybersecurity</option>
+                    <option value="Data Science" <?= in_array('Data Science', explode(',', $user['specialties'])) ? 'selected' : ''; ?>>Data Science</option>
+                    <option value="Machine Learning" <?= in_array('Machine Learning', explode(',', $user['specialties'])) ? 'selected' : ''; ?>>Machine Learning</option>
+                    <option value="Blockchain" <?= in_array('Blockchain', explode(',', $user['specialties'])) ? 'selected' : ''; ?>>Blockchain</option>
+                    <option value="Robotics" <?= in_array('Robotics', explode(',', $user['specialties'])) ? 'selected' : ''; ?>>Robotics</option>
+                    <option value="Big Data" <?= in_array('Big Data', explode(',', $user['specialties'])) ? 'selected' : ''; ?>>Big Data</option>
+                    <option value="Cloud Computing" <?= in_array('Cloud Computing', explode(',', $user['specialties'])) ? 'selected' : ''; ?>>Cloud Computing</option>
+                    <option value="Internet of Things" <?= in_array('Internet of Things', explode(',', $user['specialties'])) ? 'selected' : ''; ?>>Internet of Things</option>
+                    <option value="DevOps" <?= in_array('DevOps', explode(',', $user['specialties'])) ? 'selected' : ''; ?>>DevOps</option>
+                    <option value="Automation" <?= in_array('Automation', explode(',', $user['specialties'])) ? 'selected' : ''; ?>>Automation</option>
+                    <option value="Virtualization" <?= in_array('Virtualization', explode(',', $user['specialties'])) ? 'selected' : ''; ?>>Virtualization</option>
+                    <option value="Database Management" <?= in_array('Database Management', explode(',', $user['specialties'])) ? 'selected' : ''; ?>>Database Management</option>
+                    <option value="Software Development" <?= in_array('Software Development', explode(',', $user['specialties'])) ? 'selected' : ''; ?>>Software Development</option>
+                    <option value="Quantum Computing" <?= in_array('Quantum Computing', explode(',', $user['specialties'])) ? 'selected' : ''; ?>>Quantum Computing</option>
+                </select>
+
+                <label for="interests">Interests:</label>
+                <select name="interests[]" id="interests" multiple>
+                    <option value="AI" <?= in_array('AI', explode(',', $user['interests'])) ? 'selected' : ''; ?>>AI</option>
+                    <option value="Cybersecurity" <?= in_array('Cybersecurity', explode(',', $user['interests'])) ? 'selected' : ''; ?>>Cybersecurity</option>
+                    <option value="Data Science" <?= in_array('Data Science', explode(',', $user['interests'])) ? 'selected' : ''; ?>>Data Science</option>
+                    <option value="Machine Learning" <?= in_array('Machine Learning', explode(',', $user['interests'])) ? 'selected' : ''; ?>>Machine Learning</option>
+                    <option value="Blockchain" <?= in_array('Blockchain', explode(',', $user['interests'])) ? 'selected' : ''; ?>>Blockchain</option>
+                    <option value="Robotics" <?= in_array('Robotics', explode(',', $user['interests'])) ? 'selected' : ''; ?>>Robotics</option>
+                    <option value="Game Development" <?= in_array('Game Development', explode(',', $user['interests'])) ? 'selected' : ''; ?>>Game Development</option>
+                    <option value="Cloud Computing" <?= in_array('Cloud Computing', explode(',', $user['interests'])) ? 'selected' : ''; ?>>Cloud Computing</option>
+                    <option value="Web Development" <?= in_array('Web Development', explode(',', $user['interests'])) ? 'selected' : ''; ?>>Web Development</option>
+                    <option value="Mobile App Development" <?= in_array('Mobile App Development', explode(',', $user['interests'])) ? 'selected' : ''; ?>>Mobile App Development</option>
+                    <option value="Entrepreneurship" <?= in_array('Entrepreneurship', explode(',', $user['interests'])) ? 'selected' : ''; ?>>Entrepreneurship</option>
+                    <option value="Blockchain" <?= in_array('Blockchain', explode(',', $user['interests'])) ? 'selected' : ''; ?>>Blockchain</option>
+                    <option value="Ethical Hacking" <?= in_array('Ethical Hacking', explode(',', $user['interests'])) ? 'selected' : ''; ?>>Ethical Hacking</option>
+                    <option value="Data Analytics" <?= in_array('Data Analytics', explode(',', $user['interests'])) ? 'selected' : ''; ?>>Data Analytics</option>
+                    <option value="Deep Learning" <?= in_array('Deep Learning', explode(',', $user['interests'])) ? 'selected' : ''; ?>>Deep Learning</option>
                 </select>
 
                 <button type="submit">Save Changes</button>
             </form>
         </div>
-
-        <a href="dashboard.php" class="back-link">Back to Dashboard</a>
     </div>
 </body>
 </html>

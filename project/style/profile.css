@@ -1,37 +1,50 @@
+/* General Styling */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #0B192C;
-    color: #FFFFFF;
+    background-color: #0b192c;
+    font-family: 'Arial', sans-serif;
+    color: #fff;
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    min-height: 100vh;
 }
 
+h1 {
+    font-size: 2.5rem;
+    color: #64ffda;
+    margin-bottom: 30px;
+}
+
+/* Navbar Styling */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #0B192C;
     padding: 1rem 2rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    position: sticky;
+    top: 0;
+    z-index: 10;
     color: white;
-    width: 100%;
 }
 
 .navbar .logo {
-    font-size: 1.5rem;
+    font-size: 1.7rem;
     font-weight: bold;
-    color: #3E92CC;
+    color: #3E92CC; /* Blue glow for the logo */
     text-transform: uppercase;
+    transition: color 0.3s;
+}
+
+.navbar .logo:hover {
+    color: #B0C4DE;
 }
 
 .navbar .nav-links {
     list-style: none;
     display: flex;
     gap: 1.5rem;
+    align-items: center;
+    margin-left: auto;  /* Ensure the links are aligned to the right */
 }
 
 .navbar .nav-links li {
@@ -43,7 +56,7 @@ body {
     color: white;
     padding: 0.5rem 1rem;
     border-radius: 5px;
-    transition: background 0.3s;
+    transition: background 0.3s, color 0.3s;
 }
 
 .navbar .nav-links a:hover {
@@ -51,83 +64,142 @@ body {
     color: white;
 }
 
-/* Profile Section */
+/* Profile Picture in Navbar (Logout Button) */
+.navbar .profile-pic-navbar {
+    width: 35px;  /* Adjusted size for navbar */
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #3E92CC; /* Changed the border color to #3E92CC */
+    cursor: pointer;
+    transition: transform 0.3s;
+    margin-left: 20px; /* Added margin to move the logout button closer */
+}
+
+.navbar .profile-pic-navbar:hover {
+    transform: scale(1.1);
+}
+
+/* Profile Container */
 .profile-container {
     background: #112240;
     border-radius: 10px;
     padding: 30px;
-    max-width: 600px;
-    width: 100%;
-    text-align: center;
+    max-width: 800px;
+    margin: 40px auto;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    margin-top: 40px;
+    text-align: center;
 }
 
-.profile-container h1 {
-    font-size: 1.8em;
-    margin-bottom: 20px;
-}
-
-.profile-pic {
-    width: 120px;
-    height: 120px;
+/* Profile Picture in Profile Section */
+.profile-pic-large {
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
-    margin-bottom: 20px;
-    border: 2px solid #64ffda;
-    transition: transform 0.3s;
+    object-fit: cover;
+    margin-bottom: 30px;
+    border: 2px solid #3E92CC; /* Changed the border color to #3E92CC */
 }
 
-.profile-pic:hover {
-    transform: scale(1.1);
-}
-
-.profile-info form {
+/* Form Styling */
+form {
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 20px;
+    width: 100%;
 }
 
-.profile-info label {
-    width: 100%;
+form label {
+    font-size: 1.2rem;
+    color: #fff;
     text-align: left;
-    margin-bottom: 8px;
 }
 
-.profile-info input,
-.profile-info select,
-.profile-info textarea {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
+form input,
+form select,
+form textarea {
+    padding: 12px;
+    background-color: #1c2a44;
+    color: #fff;
     border: 2px solid #64ffda;
     border-radius: 5px;
-    background: #1C2A44;
-    color: #FFF;
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-.profile-info button {
-    padding: 10px 20px;
+form input:focus,
+form select:focus,
+form textarea:focus {
+    outline: none;
+    border-color: #3e92cc;
+}
+
+form textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+form button {
+    padding: 12px 20px;
     background-color: #64ffda;
     border: none;
     border-radius: 5px;
-    color: #0B192C;
+    font-size: 1.1rem;
     font-weight: bold;
+    color: #0b192c;
     cursor: pointer;
     transition: background 0.3s;
 }
 
-.profile-info button:hover {
+form button:hover {
     background-color: #52e6c6;
 }
 
-.back-link {
-    margin-top: 20px;
-    display: inline-block;
-    text-decoration: none;
+/* Profile Section Specialties and Interests */
+select[multiple] {
+    height: 150px;
+}
+
+label[for="specialties"],
+label[for="interests"] {
+    font-size: 1.2rem;
     color: #64ffda;
 }
 
-.back-link:hover {
-    text-decoration: underline;
+/* Profile Option Row */
+.profile-option-row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
+
+/* Profile Input Fields */
+.profile-option-row select,
+.profile-option-row input {
+    margin-bottom: 15px;
+}
+
+/* Fix input and select sizes */
+input[type="file"],
+select[multiple] {
+    width: 100%;
+}
+
+input[type="file"] {
+    padding: 8px;
+    font-size: 1rem;
+}
+
+/* Bio Section */
+textarea#description {
+    height: 150px;
+}
+
+/* Profile Page Text */
+.profile-container h1 {
+    font-size: 2rem;
+    color: #64ffda;
+    margin-bottom: 20px;
+}
+

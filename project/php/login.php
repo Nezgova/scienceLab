@@ -1,5 +1,5 @@
 <?php
-require 'db.php';
+require 'db.php';  // Include the updated db.php to use the $pdo object
 
 $errors = [];
 
@@ -10,11 +10,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($email) || empty($password)) {
         $errors[] = "All fields are required.";
     } else {
+        // Use the $pdo object to query the users table
         $sql = "SELECT * FROM users WHERE email = :email";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([':email' => $email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
+        // Check if user exists and verify password
         if ($user && password_verify($password, $user['password'])) {
             session_start();
             $_SESSION['user_id'] = $user['id'];

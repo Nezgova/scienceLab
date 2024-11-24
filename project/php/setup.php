@@ -13,7 +13,7 @@ try {
     die("Could not connect to the database: " . $e->getMessage());
 }
 
-// Create the specialties table if not exists
+// Create specialties table
 $create_specialties_table_query = "
 CREATE TABLE IF NOT EXISTS specialties (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -21,18 +21,19 @@ CREATE TABLE IF NOT EXISTS specialties (
 )";
 $pdo->exec($create_specialties_table_query);
 
-// Create the users table if not exists (with specialties column)
+// Create users table
 $create_users_table_query = "
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    profile_picture VARCHAR(255) DEFAULT NULL,
     description TEXT,
     sex VARCHAR(10),
-    specialties VARCHAR(255) DEFAULT NULL
+    specialties TEXT DEFAULT NULL,
+    interests TEXT DEFAULT NULL,
+    profile_picture VARCHAR(255) DEFAULT NULL
 )";
 $pdo->exec($create_users_table_query);
 
-// Insert sample specialties (only if the table is empty)
+// Insert sample specialties if empty
 $check_specialties_query = $pdo->query("SELECT COUNT(*) FROM specialties");
 if ($check_specialties_query->fetchColumn() == 0) {
     $insert_specialties_query = "

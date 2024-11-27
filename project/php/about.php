@@ -2,59 +2,83 @@
 session_start();
 require 'db.php';
 
-// Check if the user is logged in
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit();
-}
+class ArticlePortal {
+    private $pdo;
+    private $user_id;
+    private $username;
+    public $profile_picture;
+    public $message = null;
+    public $articles = [];
 
-// Get user ID and username from session
-$user_id = $_SESSION['user_id'];
-$username = $_SESSION['username'];
+    public function __construct($pdo) {
+        $this->pdo = $pdo;
+        $this->checkLogin();
+        $this->fetchUserProfile();
+        $this->handleArticleSubmission();
+        $this->fetchArticles();
+    }
 
-// Fetch user profile picture
-$stmt = $pdo->prepare("SELECT profile_picture FROM users WHERE id = ?");
-$stmt->execute([$user_id]);
-$user = $stmt->fetch(PDO::FETCH_ASSOC);
-$profile_picture = $user['profile_picture'] ?: 'attachments/default.png'; // Use a default image if not set
-
-$message = null;
-
-// Handle form submission
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $title = trim($_POST['title']);
-    $link = trim($_POST['link']);
-
-    if (!empty($title) && !empty($link)) {
-        try {
-            $insert_stmt = $pdo->prepare("
-                INSERT INTO articles (title, link, author_id, created_at) 
-                VALUES (:title, :link, :author_id, NOW())
-            ");
-            $insert_stmt->execute([
-                ':title' => $title,
-                ':link' => $link,
-                ':author_id' => $user_id
-            ]);
-            $message = "Article submitted successfully!";
-        } catch (Exception $e) {
-            $message = "Failed to submit article: " . $e->getMessage();
+    private function checkLogin() {
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: login.php");
+            exit();
         }
-    } else {
-        $message = "Please fill in both the title and the link.";
+        $this->user_id = $_SESSION['user_id'];
+        $this->username = $_SESSION['username'];
+    }
+
+    public function getUsername() {
+        return $this->username;
+    }
+
+    private function fetchUserProfile() {
+        $stmt = $this->pdo->prepare("SELECT profile_picture FROM users WHERE id = ?");
+        $stmt->execute([$this->user_id]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->profile_picture = $user['profile_picture'] ?? 'attachments/default.png';
+    }
+
+    private function handleArticleSubmission() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $title = trim($_POST['title']);
+            $link = trim($_POST['link']);
+
+            if (!empty($title) && !empty($link)) {
+                try {
+                    $stmt = $this->pdo->prepare("
+                        INSERT INTO articles (title, link, author_id, created_at) 
+                        VALUES (:title, :link, :author_id, NOW())
+                    ");
+                    $stmt->execute([
+                        ':title' => $title,
+                        ':link' => $link,
+                        ':author_id' => $this->user_id
+                    ]);
+                    $this->message = "Article submitted successfully!";
+                } catch (Exception $e) {
+                    $this->message = "Failed to submit article: " . $e->getMessage();
+                }
+            } else {
+                $this->message = "Please fill in both the title and the link.";
+            }
+        }
+    }
+
+    private function fetchArticles() {
+        $stmt = $this->pdo->prepare("
+            SELECT articles.id, articles.title, articles.link, articles.votes, articles.created_at, 
+                   users.username AS author
+            FROM articles
+            JOIN users ON articles.author_id = users.id
+            ORDER BY articles.created_at DESC
+        ");
+        $stmt->execute();
+        $this->articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 
-// Fetch articles from the database
-$stmt = $pdo->prepare("
-    SELECT articles.id, articles.title, articles.link, articles.votes, articles.created_at, 
-           users.username AS author
-    FROM articles
-    JOIN users ON articles.author_id = users.id
-    ORDER BY articles.created_at DESC
-");
-$stmt->execute();
-$articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// Instantiate the ArticlePortal class
+$portal = new ArticlePortal($pdo);
 ?>
 
 <!DOCTYPE html>
@@ -74,8 +98,8 @@ $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <li><a href="about.php" class="active">About</a></li>
             <li><a href="profile.php">Profile</a></li>
             <li class="logout">
-                <a href="logout.php" class="profile-pic-container" title="Logout (<?= htmlspecialchars($username) ?>)">
-                    <img src="../<?= htmlspecialchars($profile_picture); ?>" alt="Profile Picture" class="profile-pic">
+                <a href="logout.php" class="profile-pic-container" title="Logout (<?= htmlspecialchars($portal->getUsername()) ?>)">
+                    <img src="../<?= htmlspecialchars($portal->profile_picture); ?>" alt="Profile Picture" class="profile-pic">
                 </a>
             </li>
         </ul>
@@ -86,8 +110,8 @@ $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <h1>Submit Your Article</h1>
         <p>Share your research with the community by submitting your article below.</p>
         
-        <?php if ($message): ?>
-            <p class="message"><?= htmlspecialchars($message) ?></p>
+        <?php if ($portal->message): ?>
+            <p class="message"><?= htmlspecialchars($portal->message) ?></p>
         <?php endif; ?>
 
         <form method="POST" action="about.php">
@@ -106,11 +130,11 @@ $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <!-- Dashboard Section (Articles) -->
     <div class="articles-section">
         <h2>Research Articles</h2>
-        <?php if (empty($articles)): ?>
+        <?php if (empty($portal->articles)): ?>
             <p>No articles found. Be the first to post!</p>
         <?php else: ?>
             <div class="articles-list">
-                <?php foreach ($articles as $article): ?>
+                <?php foreach ($portal->articles as $article): ?>
                     <div class="article" data-article-id="<?= $article['id'] ?>">
                         <h3><?= htmlspecialchars($article['title']) ?></h3>
                         <p>By: <?= htmlspecialchars($article['author']) ?></p>

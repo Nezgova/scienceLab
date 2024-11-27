@@ -10,7 +10,7 @@ class Database {
     public function __construct() {
         $this->connect();
     }
-//hha
+
     // Method to establish the connection
     public function connect() {
         try {

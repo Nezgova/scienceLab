@@ -18,6 +18,33 @@ $stmt->execute([$user_id]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 $profile_picture = $user['profile_picture'] ?: 'attachments/default.png'; // Use a default image if not set
 
+$message = null;
+
+// Handle form submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $title = trim($_POST['title']);
+    $link = trim($_POST['link']);
+
+    if (!empty($title) && !empty($link)) {
+        try {
+            $insert_stmt = $pdo->prepare("
+                INSERT INTO articles (title, link, author_id, created_at) 
+                VALUES (:title, :link, :author_id, NOW())
+            ");
+            $insert_stmt->execute([
+                ':title' => $title,
+                ':link' => $link,
+                ':author_id' => $user_id
+            ]);
+            $message = "Article submitted successfully!";
+        } catch (Exception $e) {
+            $message = "Failed to submit article: " . $e->getMessage();
+        }
+    } else {
+        $message = "Please fill in both the title and the link.";
+    }
+}
+
 // Fetch articles from the database
 $stmt = $pdo->prepare("
     SELECT articles.id, articles.title, articles.link, articles.votes, articles.created_at, 
@@ -59,7 +86,7 @@ $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <h1>Submit Your Article</h1>
         <p>Share your research with the community by submitting your article below.</p>
         
-        <?php if (isset($message)): ?>
+        <?php if ($message): ?>
             <p class="message"><?= htmlspecialchars($message) ?></p>
         <?php endif; ?>
 

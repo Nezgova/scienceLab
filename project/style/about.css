@@ -23,13 +23,12 @@ body {
     position: sticky;
     top: 0;
     z-index: 10;
-    color: white;
 }
 
 .navbar .logo {
     font-size: 1.7rem;
     font-weight: bold;
-    color: #3E92CC; /* Blue glow for the logo */
+    color: #3E92CC;
     text-transform: uppercase;
     transition: color 0.3s;
 }
@@ -43,10 +42,6 @@ body {
     display: flex;
     gap: 1.5rem;
     align-items: center;
-}
-
-.navbar .nav-links li {
-    display: inline;
 }
 
 .navbar .nav-links a {
@@ -108,7 +103,6 @@ body {
 .main-content {
     padding: 2rem;
     text-align: center;
-    min-height: 70vh;
 }
 
 .main-content h1 {
@@ -123,18 +117,92 @@ body {
     color: #B0C4DE;
 }
 
-/* Dashboard Section Styling */
-.articles-section {
-    padding: 2rem;
-    text-align: center;
-    background-color: #1C2A44;
-    margin-top: 20px;
+/* Search Form Styling */
+.search-form {
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
 }
 
-.articles-section h2 {
-    font-size: 2rem;
-    color: #64FFDA;
-    margin-bottom: 1.5rem;
+.search-form input[type="text"] {
+    width: 60%;
+    max-width: 400px;
+    padding: 0.8rem;
+    border: 2px solid #3E92CC;
+    border-radius: 5px 0 0 5px;
+    background-color: #1C2A44;
+    color: white;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.search-form input[type="text"]::placeholder {
+    color: #B0C4DE;
+}
+
+.search-form input[type="text"]:focus {
+    border-color: #64FFDA;
+    box-shadow: 0 0 8px #64FFDA;
+}
+
+.search-form button {
+    padding: 0.8rem 1.5rem;
+    background-color: #3E92CC;
+    color: white;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s, box-shadow 0.3s;
+}
+
+.search-form button:hover {
+    background-color: #64FFDA;
+    box-shadow: 0 0 8px #64FFDA;
+}
+
+/* Input Fields (Article Title & Link)  */
+/* Article Input Fields */
+.form-group {
+    margin-bottom: 1rem; /* Add space between the two input fields */
+}
+
+.form-group input[type="text"],
+.form-group input[type="url"] {
+    width: 60%;
+    max-width: 400px;
+    padding: 0.8rem;
+    border: 2px solid #3E92CC;
+    border-radius: 5px;
+    background-color: #1C2A44;
+    color: white;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-group input[type="text"]::placeholder,
+.form-group input[type="url"]::placeholder {
+    color: #B0C4DE;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="url"]:focus {
+    border-color: #64FFDA;
+    box-shadow: 0 0 8px #64FFDA;
+}
+
+/* Space between the two inputs */
+.form-group input[type="url"] {
+    margin-top: 1rem; /* This creates space between the two inputs */
+}
+
+
+/* Articles Section Styling */
+.articles-section {
+    padding: 3rem 2rem;
+    background-color: #0B192C; /* Matches the body background */
 }
 
 .articles-list {
@@ -145,28 +213,58 @@ body {
 }
 
 .article {
-    background-color: #2E3C52;
-    padding: 1rem;
-    width: 300px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    background-color: #1C2A44;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 300px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.article:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
 }
 
 .article h3 {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     color: #3E92CC;
-    margin-bottom: 10px;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.articles-section h2 {
+    text-align: center;
+    padding-bottom: 20px;
 }
 
 .article p {
     font-size: 1.1rem;
     color: #B0C4DE;
-    margin-bottom: 15px;
+    margin-bottom: 1rem;
     text-align: center;
+}
+
+.article a {
+    text-decoration: none;
+    color: #64FFDA;
+    font-weight: bold;
+}
+
+.article a:hover {
+    text-decoration: underline;
+}
+
+/* Updated Voting Buttons */
+.vote-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
 }
 
 .vote-btn {
@@ -177,25 +275,19 @@ body {
     border-radius: 5px;
     cursor: pointer;
     transition: background 0.3s;
-    margin: 0.5rem;
 }
 
 .vote-btn:hover {
     background-color: #64FFDA;
 }
 
-.vote-btn:disabled {
-    background-color: #B0C4DE;
-    cursor: not-allowed;
-}
-
 .vote-count {
     font-size: 1.2rem;
     color: #64FFDA;
-    margin-top: 10px;
+    margin: 10px 0;
 }
 
-/* Button Styling (Submit Button) */
+/* Submit Button */
 .button {
     background-color: #3E92CC;
     color: white;

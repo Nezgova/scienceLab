@@ -17,6 +17,15 @@ $stmt = $pdo->prepare("SELECT profile_picture FROM users WHERE id = ?");
 $stmt->execute([$user_id]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 $profile_picture = $user['profile_picture'] ?: 'attachments/default.png';
+
+// Fetch top 3 voted articles
+$top_articles_stmt = $pdo->query("
+    SELECT title, link, votes 
+    FROM articles 
+    ORDER BY votes DESC 
+    LIMIT 3
+");
+$top_articles = $top_articles_stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -50,6 +59,24 @@ $profile_picture = $user['profile_picture'] ?: 'attachments/default.png';
         </div>
         <h1>Welcome to the Lab Portal</h1>
         <p>This is your home page where you can browse and upload research articles.</p>
+
+        <!-- Scoreboard for Top Articles -->
+        <h2>Top Voted Articles</h2>
+        <div class="scoreboard">
+            <?php if (empty($top_articles)): ?>
+                <p>No top articles available yet.</p>
+            <?php else: ?>
+                <ul>
+                    <?php foreach ($top_articles as $article): ?>
+                        <li>
+                            <a href="<?= htmlspecialchars($article['link']) ?>" target="_blank">
+                                <?= htmlspecialchars($article['title']) ?>
+                            </a> - Votes: <?= htmlspecialchars($article['votes']) ?>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
+        </div>
     </div>
 </body>
 </html>

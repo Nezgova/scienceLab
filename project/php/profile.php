@@ -7,6 +7,7 @@ class UserProfile {
     private $user_id;
     private $user_data;
     public $specialties = [];
+    public $user_articles = [];
     public $message = null;
 
     public function __construct($conn) {
@@ -14,6 +15,7 @@ class UserProfile {
         $this->checkLogin();
         $this->fetchUserData();
         $this->fetchSpecialties();
+        $this->fetchUserArticles(); // Fetch user's articles
         $this->handleFormSubmission();
     }
 
@@ -38,6 +40,14 @@ class UserProfile {
     private function fetchSpecialties() {
         $result = $this->conn->query("SELECT name FROM specialties");
         $this->specialties = $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    private function fetchUserArticles() {
+        $stmt = $this->conn->prepare("SELECT title, link, created_at FROM articles WHERE author_id = ? ORDER BY created_at DESC");
+        $stmt->bind_param("i", $this->user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $this->user_articles = $result->fetch_all(MYSQLI_ASSOC);
     }
 
     public function getUserData($key) {
@@ -148,5 +158,23 @@ $userProfile = new UserProfile($conn);
             <button type="submit">Save Changes</button>
         </form>
     </div>
+
+   <!-- Display User's Articles -->
+<div class="user-articles">
+    <h2>Your Articles</h2>
+    <?php if (empty($userProfile->user_articles)): ?>
+        <p>You haven't posted any articles yet.</p>
+    <?php else: ?>
+        <ul>
+            <?php foreach ($userProfile->user_articles as $article): ?>
+                <li class="article-item">
+                    <h3><a href="<?= htmlspecialchars($article['link']); ?>" target="_blank"><?= htmlspecialchars($article['title']); ?></a></h3>
+                    <p>Posted on: <?= date('F j, Y', strtotime($article['created_at'])); ?></p>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    <?php endif; ?>
+</div>
+
 </body>
 </html>

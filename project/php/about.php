@@ -65,17 +65,30 @@ class ArticlePortal {
     }
 
     private function fetchArticles() {
-        $stmt = $this->pdo->prepare("
+        $searchQuery = $_GET['search'] ?? '';
+        $sql = "
             SELECT articles.id, articles.title, articles.link, articles.votes, articles.created_at, 
                    users.username AS author
             FROM articles
             JOIN users ON articles.author_id = users.id
-            ORDER BY articles.created_at DESC
-        ");
-        $stmt->execute();
+        ";
+        if ($searchQuery) {
+            $sql .= " WHERE articles.title LIKE :searchQuery OR users.username LIKE :searchQuery";
+        }
+        $sql .= " ORDER BY articles.created_at DESC";
+        $stmt = $this->pdo->prepare($sql);
+        
+        if ($searchQuery) {
+            $stmt->execute([':searchQuery' => '%' . $searchQuery . '%']);
+        } else {
+            $stmt->execute();
+        }
         $this->articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    
+    
 }
+
 
 // Instantiate the ArticlePortal class
 $portal = new ArticlePortal($pdo);
@@ -107,25 +120,32 @@ $portal = new ArticlePortal($pdo);
 
     <!-- Main Content -->
     <div class="main-content">
-        <h1>Submit Your Article</h1>
-        <p>Share your research with the community by submitting your article below.</p>
-        
-        <?php if ($portal->message): ?>
-            <p class="message"><?= htmlspecialchars($portal->message) ?></p>
-        <?php endif; ?>
+    <h1>Submit Your Article</h1>
+    <p>Share your research with the community by submitting your article below.</p>
+    
+    <?php if ($portal->message): ?>
+        <p class="message"><?= htmlspecialchars($portal->message) ?></p>
+    <?php endif; ?>
 
-        <form method="POST" action="about.php">
-            <div class="form-group">
-                <label for="title">Article Title</label>
-                <input type="text" id="title" name="title" required>
-            </div>
-            <div class="form-group">
-                <label for="link">Article Link</label>
-                <input type="url" id="link" name="link" required>
-            </div>
-            <button type="submit" class="button">Submit Article</button>
-        </form>
-    </div>
+    <form method="POST" action="about.php">
+        <div class="form-group">
+            <label for="title">Article Title</label>
+            <input type="text" id="title" name="title" required>
+        </div>
+        <div class="form-group">
+            <label for="link">Article Link</label>
+            <input type="url" id="link" name="link" required>
+        </div>
+        <button type="submit" class="button">Submit Article</button>
+    </form>
+
+    <!-- Search form -->
+    <form method="GET" action="about.php" class="search-form">
+        <input type="text" name="search" placeholder="Search articles..." value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
+        <button type="submit">Search</button>
+    </form>
+</div>
+
 
     <!-- Dashboard Section (Articles) -->
     <div class="articles-section">

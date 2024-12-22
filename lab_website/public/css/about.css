@@ -1,0 +1,321 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Body Background */
+body {
+    background-color: #0B192C;
+    color: white;
+}
+
+/* Navbar Styling */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #0B192C;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.navbar .logo {
+    font-size: 1.7rem;
+    font-weight: bold;
+    color: #3E92CC;
+    text-transform: uppercase;
+    transition: color 0.3s;
+}
+
+.navbar .logo:hover {
+    color: #B0C4DE;
+}
+
+.navbar .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.navbar .nav-links a {
+    text-decoration: none;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: background 0.3s, color 0.3s;
+}
+
+.navbar .nav-links a.active {
+    background-color: #3E92CC;
+    color: white;
+}
+
+.navbar .nav-links a:hover {
+    background-color: #3E92CC;
+    color: white;
+}
+
+/* Profile Picture in Navbar */
+.profile-pic-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.profile-pic-container:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    white-space: nowrap;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #3E92CC;
+    cursor: pointer;
+    transition: transform 0.3s, border-color 0.3s;
+    object-fit: cover;
+}
+
+.profile-pic:hover {
+    transform: scale(1.1);
+    border-color: #B0C4DE;
+}
+
+/* Main Content Styling */
+.main-content {
+    padding: 2rem;
+    text-align: center;
+}
+
+.main-content h1 {
+    font-size: 2.5rem;
+    margin: 1rem 0;
+    color: #3E92CC;
+}
+
+.main-content p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #B0C4DE;
+}
+
+/* Search Form Styling */
+.search-form {
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+.search-form input[type="text"] {
+    width: 60%;
+    max-width: 400px;
+    padding: 0.8rem;
+    border: 2px solid #3E92CC;
+    border-radius: 5px 0 0 5px;
+    background-color: #1C2A44;
+    color: white;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.search-form input[type="text"]::placeholder {
+    color: #B0C4DE;
+}
+
+.search-form input[type="text"]:focus {
+    border-color: #64FFDA;
+    box-shadow: 0 0 8px #64FFDA;
+}
+
+.search-form button {
+    padding: 0.8rem 1.5rem;
+    background-color: #3E92CC;
+    color: white;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s, box-shadow 0.3s;
+}
+
+.search-form button:hover {
+    background-color: #64FFDA;
+    box-shadow: 0 0 8px #64FFDA;
+}
+
+/* Input Fields (Article Title & Link) */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group input[type="text"],
+.form-group input[type="url"] {
+    width: 60%;
+    max-width: 400px;
+    padding: 0.8rem;
+    border: 2px solid #3E92CC;
+    border-radius: 5px;
+    background-color: #1C2A44;
+    color: white;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-group input[type="text"]::placeholder,
+.form-group input[type="url"]::placeholder {
+    color: #B0C4DE;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="url"]:focus {
+    border-color: #64FFDA;
+    box-shadow: 0 0 8px #64FFDA;
+}
+
+.form-group input[type="url"] {
+    margin-top: 1rem;
+}
+
+/* Articles Section Styling */
+.articles-section {
+    padding: 3rem 2rem;
+    background-color: #0B192C;
+}
+
+.articles-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.article {
+    background-color: #1C2A44;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 300px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.article:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+.article h3 {
+    font-size: 1.6rem;
+    color: #3E92CC;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.articles-section h2 {
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.article p {
+    font-size: 1.1rem;
+    color: #B0C4DE;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.article a {
+    text-decoration: none;
+    color: #64FFDA;
+    font-weight: bold;
+}
+
+.article a:hover {
+    text-decoration: underline;
+}
+
+/* Updated Voting Buttons */
+.vote-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.vote-btn {
+    background-color: #3E92CC;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.vote-btn:hover {
+    background-color: #64FFDA;
+}
+
+.vote-count {
+    font-size: 1.2rem;
+    color: #64FFDA;
+    margin: 10px 0;
+}
+
+/* Submit Button */
+.button {
+    background-color: #3E92CC;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 20px;
+}
+
+.button:hover {
+    background-color: #64FFDA;
+}
+
+/* Pagination Styling */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.pagination a {
+    color: #64FFDA;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+.pagination a:hover {
+    background-color: #64FFDA;
+    color: white;
+}

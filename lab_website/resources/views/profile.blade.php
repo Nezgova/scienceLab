@@ -13,21 +13,22 @@
         <ul class="nav-links">
             <li><a href="{{ route('home') }}">Home</a></li>
             <li><a href="about.php">About</a></li>
-            <li><a href="{{ route('profile.show') }}" class="active">Profile</a></li>
+            <li><a href="{{ route('profile') }}" class="active">Profile</a></li>
         </ul>
         <a href="{{ route('logout') }}">
-            <img src="{{ asset('storage/' . (auth()->user()->profile_picture ?: 'profile_pictures/default.png')) }}" alt="Profile Picture" class="profile-pic-large">
+            <img src="{{ asset('storage/' . (auth()->user()->profile_picture ?: 'profile_pictures/default.png')) }}" 
+                 alt="Profile Picture" class="profile-pic-large">
         </a>
     </nav>
 
     <!-- Profile Section -->
     <div class="profile-container">
         <h1>Welcome, {{ auth()->user()->username }}!</h1>
-        <img src="{{ asset('storage/' . (auth()->user()->profile_picture ?: 'profile_pictures/default_large.png')) }}" alt="Profile Picture" class="profile-pic-large">
+        <img src="{{ asset('storage/' . (auth()->user()->profile_picture ?: 'profile_pictures/default_large.png')) }}" 
+             alt="Profile Picture" class="profile-pic-large">
 
-        <form method="POST" enctype="multipart/form-data" action="{{ route('profile.update') }}">
+        <form method="POST" enctype="multipart/form-data" action="{{ route('profile') }}">
             @csrf
-
             <!-- Profile Picture -->
             <label for="profile_picture">Change Profile Picture:</label>
             <input type="file" name="profile_picture" id="profile_picture" accept="image/*">

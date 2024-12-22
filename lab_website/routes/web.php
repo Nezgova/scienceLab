@@ -9,9 +9,14 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserProfileController;
 
+Route::get('/about', [ArticleController::class, 'about'])->name('about');
+Route::post('/about', [ArticleController::class, 'store'])->middleware('auth');
+
+
+
 // Public routes
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 // Authentication routes
@@ -28,9 +33,13 @@ Route::middleware('auth')->group(function () {
     // Home page
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-    // Profile routes
+  
+
+
     Route::get('/profile', [UserProfileController::class, 'show'])->name('profile');
-Route::post('/profile', [UserProfileController::class, 'update'])->name('profile');
+    Route::post('/profile', [UserProfileController::class, 'update']);
+    
+
 
 
     // Resourceful routes

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -21,4 +20,11 @@ class Article extends Model
     {
         return $this->hasMany(UserVote::class);
     }
+
+    // Add a helper to count votes if you use the UserVote relationship
+    public function getVoteCountAttribute()
+    {
+        return $this->votes->count();  // Count votes using the UserVote relationship
+    }
 }
+

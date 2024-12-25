@@ -6,8 +6,7 @@
 
 <?php $__env->startSection('content'); ?>
     <h1>Profile</h1>
-    
-    <!-- User Profile Section -->
+
     <div class="user-section-container">
         <form method="POST" action="<?php echo e(route('profile.update')); ?>" enctype="multipart/form-data">
             <?php echo csrf_field(); ?>
@@ -19,7 +18,7 @@
                     alt="Profile Picture" 
                     class="profile-pic-large"
                 >
-                <input type="file" name="profile_picture" accept="image/*">
+                <input type="file" name="profile_picture" accept="image/*"> <!-- Input for uploading a new image -->
             </div>
 
             <!-- Profile Form Fields -->
@@ -36,7 +35,7 @@
                         <?php echo e(is_array($user->interests) && in_array($interest, $user->interests) ? 'selected' : ''); ?>><?php echo e($interest); ?></option>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </select>
-            
+
             <label>Specialties</label>
             <select name="specialties[]" multiple>
                 <?php $__currentLoopData = ['Programming', 'Design', 'Writing', 'Marketing', 'Leadership']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $specialty): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>

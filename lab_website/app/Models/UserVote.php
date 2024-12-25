@@ -11,7 +11,6 @@ class UserVote extends Model
 
     protected $fillable = ['user_id', 'article_id', 'vote'];
 
-    // Define relationships
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -22,3 +21,4 @@ class UserVote extends Model
         return $this->belongsTo(Article::class);
     }
 }
+

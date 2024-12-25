@@ -6,8 +6,7 @@
 
 @section('content')
     <h1>Profile</h1>
-    
-    <!-- User Profile Section -->
+
     <div class="user-section-container">
         <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
             @csrf
@@ -19,7 +18,7 @@
                     alt="Profile Picture" 
                     class="profile-pic-large"
                 >
-                <input type="file" name="profile_picture" accept="image/*">
+                <input type="file" name="profile_picture" accept="image/*"> <!-- Input for uploading a new image -->
             </div>
 
             <!-- Profile Form Fields -->
@@ -36,7 +35,7 @@
                         {{ is_array($user->interests) && in_array($interest, $user->interests) ? 'selected' : '' }}>{{ $interest }}</option>
                 @endforeach
             </select>
-            
+
             <label>Specialties</label>
             <select name="specialties[]" multiple>
                 @foreach(['Programming', 'Design', 'Writing', 'Marketing', 'Leadership'] as $specialty)

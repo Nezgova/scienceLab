@@ -26,42 +26,54 @@ class UserProfileController extends Controller
     }
 
     public function updateProfile(Request $request)
-    {
-        $user = Auth::user();
+{
+    $user = Auth::user();
 
-        $request->validate([
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'password' => 'nullable|min:8',
-            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'interests' => 'nullable|array',
-            'specialties' => 'nullable|array',
-            'sex' => 'nullable|string',
-            'description' => 'nullable|string|max:500',
-        ]);
+    // Validate input
+    $request->validate([
+        'email' => 'required|email|unique:users,email,' . $user->id,
+        'password' => 'nullable|min:8',
+        'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',  // Allow image uploads
+        'interests' => 'nullable|array',
+        'specialties' => 'nullable|array',
+        'sex' => 'nullable|string',
+        'description' => 'nullable|string|max:500',
+    ]);
 
-        $user->email = $request->email;
+    // Update the user's email
+    $user->email = $request->email;
 
-        if ($request->password) {
-            $user->password = Hash::make($request->password);
-        }
-
-        if ($request->file('profile_picture')) {
-            if ($user->profile_picture) {
-                Storage::delete($user->profile_picture);
-            }
-            $path = $request->file('profile_picture')->store('profile_pictures');
-            $user->profile_picture = $path;
-        }
-
-        $user->interests = json_encode($request->interests);
-        $user->specialties = json_encode($request->specialties);
-        $user->sex = $request->sex;
-        $user->description = $request->description;
-
-        $user->save();
-
-        return redirect()->back()->with('success', 'Profile updated successfully!');
+    // Update the password if provided
+    if ($request->password) {
+        $user->password = Hash::make($request->password);
     }
+
+    // Handle profile picture upload
+    if ($request->hasFile('profile_picture')) {
+        // Check if a file is being uploaded
+        if ($request->file('profile_picture')->isValid()) {
+            // Proceed with saving the file
+            $path = $request->file('profile_picture')->store('profile_pictures', 'public');
+            $user->profile_picture = $path;
+        } else {
+            return back()->withErrors(['profile_picture' => 'The uploaded file is not valid.']);
+        }
+    }
+    
+    
+
+    // Save other profile fields
+    $user->interests = json_encode($request->interests);
+    $user->specialties = json_encode($request->specialties);
+    $user->sex = $request->sex;
+    $user->description = $request->description;
+
+    // Save the updated user details
+    $user->save();
+
+    return redirect()->back()->with('success', 'Profile updated successfully!');
+}
+
 
     public function deleteAccount()
     {

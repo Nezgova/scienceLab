@@ -8,7 +8,7 @@ class Article extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['author_id', 'title', 'link', 'votes'];
+    protected $fillable = ['author_id', 'title', 'link'];
 
     // Define relationships
     public function author()
@@ -21,10 +21,27 @@ class Article extends Model
         return $this->hasMany(UserVote::class);
     }
 
-    // Add a helper to count votes if you use the UserVote relationship
-    public function getVoteCountAttribute()
+    // Get upvotes for this article
+    public function upvotes()
     {
-        return $this->votes->count();  // Count votes using the UserVote relationship
+        return $this->hasMany(UserVote::class)->where('vote', 1);
+    }
+
+    // Get downvotes for this article
+    public function downvotes()
+    {
+        return $this->hasMany(UserVote::class)->where('vote', -1);
+    }
+
+    // Get net votes (upvotes - downvotes)
+    public function netVotes()
+    {
+        return $this->upvotes()->count() - $this->downvotes()->count();
+    }
+
+    // Check if a user has voted on this article and what vote they cast
+    public function userVote($user_id)
+    {
+        return $this->votes()->where('user_id', $user_id)->first();
     }
 }
-

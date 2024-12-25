@@ -18,6 +18,9 @@ Route::get('/', function () {
 Route::get('/about', [ArticleController::class, 'about'])->name('about');
 Route::post('/about', [ArticleController::class, 'store'])->middleware('auth');
 
+// Voting routes (Upvote and Downvote)
+Route::post('/about/{article}/vote', [UserVoteController::class, 'store'])->name('vote.store'); // For upvote and downvote actions
+
 // Authentication routes
 Route::controller(AuthController::class)->group(function () {
     Route::get('login', 'showLoginForm')->name('login');

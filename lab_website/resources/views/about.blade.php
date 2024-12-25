@@ -41,12 +41,30 @@
                         <h3>{{ $article->title }}</h3>
                         <p>Posted by {{ $article->author->username }} on {{ $article->created_at->format('F j, Y') }}</p>
                         <a href="{{ $article->link }}" target="_blank">Read Article</a>
+                        
                         <!-- Voting Buttons -->
                         <div class="vote-container">
-                            <button class="vote-btn">Upvote</button>
-                            <button class="vote-btn">Downvote</button>
+                            <form action="{{ route('votes.store') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="article_id" value="{{ $article->id }}">
+                                <button type="submit" name="vote" value="1" class="vote-btn">Upvote</button>
+                            </form>
+                            <form action="{{ route('votes.store') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="article_id" value="{{ $article->id }}">
+                                <button type="submit" name="vote" value="-1" class="vote-btn">Downvote</button>
+                            </form>
                         </div>
-                        <p class="vote-count">Votes: {{ $article->votes }}</p>
+                        <p class="vote-count">
+                            Votes: 
+                            @php
+                                // Ensure votes is loaded as a collection, or set to an empty array if not
+                                $totalVotes = $article->votes ? $article->votes->sum('vote') : 0;
+                            @endphp
+                            {{ $totalVotes }}
+                        </p>
+                        
+                        
                     </div>
                 @endforeach
             @else

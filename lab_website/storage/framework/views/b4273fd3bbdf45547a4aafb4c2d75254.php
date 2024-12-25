@@ -41,12 +41,31 @@
                         <h3><?php echo e($article->title); ?></h3>
                         <p>Posted by <?php echo e($article->author->username); ?> on <?php echo e($article->created_at->format('F j, Y')); ?></p>
                         <a href="<?php echo e($article->link); ?>" target="_blank">Read Article</a>
+                        
                         <!-- Voting Buttons -->
                         <div class="vote-container">
-                            <button class="vote-btn">Upvote</button>
-                            <button class="vote-btn">Downvote</button>
+                            <form action="<?php echo e(route('votes.store')); ?>" method="POST">
+                                <?php echo csrf_field(); ?>
+                                <input type="hidden" name="article_id" value="<?php echo e($article->id); ?>">
+                                <button type="submit" name="vote" value="1" class="vote-btn">Upvote</button>
+                            </form>
+                            <form action="<?php echo e(route('votes.store')); ?>" method="POST">
+                                <?php echo csrf_field(); ?>
+                                <input type="hidden" name="article_id" value="<?php echo e($article->id); ?>">
+                                <button type="submit" name="vote" value="-1" class="vote-btn">Downvote</button>
+                            </form>
                         </div>
-                        <p class="vote-count">Votes: <?php echo e($article->votes); ?></p>
+                        <p class="vote-count">
+                            Votes: 
+                            <?php
+                                // Ensure votes is loaded as a collection, or set to an empty array if not
+                                $totalVotes = $article->votes ? $article->votes->sum('vote') : 0;
+                            ?>
+                            <?php echo e($totalVotes); ?>
+
+                        </p>
+                        
+                        
                     </div>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             <?php else: ?>

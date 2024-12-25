@@ -319,3 +319,22 @@ body {
     background-color: #64FFDA;
     color: white;
 }
+/* Submit Button (Post Article) Styling */
+.post-article-form button[type="submit"] {
+    background-color: #3E92CC;
+    color: white;
+    padding: 8px 16px; /* Smaller padding for a more compact button */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s, box-shadow 0.3s;
+    font-size: 1rem;
+    width: auto; /* Ensure it doesn't stretch full width */
+    margin-top: 10px;
+}
+
+/* Hover Effect for Submit Button */
+.post-article-form button[type="submit"]:hover {
+    background-color: #64FFDA;
+    box-shadow: 0 0 8px #64FFDA;
+}

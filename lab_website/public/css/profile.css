@@ -7,88 +7,26 @@ body {
     padding: 0;
 }
 
-h1 {
+h1, h2 {
     font-size: 2.5rem;
     color: #64ffda;
     margin-bottom: 30px;
 }
 
-/* Navbar Styling */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #0B192C;
-    padding: 1rem 2rem;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    color: white;
-}
-
-.navbar .logo {
-    font-size: 1.7rem;
-    font-weight: bold;
-    color: #3E92CC; /* Blue glow for the logo */
-    text-transform: uppercase;
-    transition: color 0.3s;
-}
-
-.navbar .logo:hover {
-    color: #B0C4DE;
-}
-
-.navbar .nav-links {
-    list-style: none;
-    display: flex;
-    gap: 1.5rem;
-    align-items: center;
-    margin-left: auto;  /* Ensure the links are aligned to the right */
-}
-
-.navbar .nav-links li {
-    display: inline;
-}
-
-.navbar .nav-links a {
-    text-decoration: none;
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    transition: background 0.3s, color 0.3s;
-}
-
-.navbar .nav-links a:hover {
-    background-color: #3E92CC;
-    color: white;
-}
-
-/* Profile Picture in Navbar (Logout Button) */
-.navbar .profile-pic-navbar {
-    width: 35px;  /* Adjusted size for navbar */
-    height: 35px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #3E92CC; /* Changed the border color to #3E92CC */
-    cursor: pointer;
-    transition: transform 0.3s;
-    margin-left: 20px; /* Added margin to move the logout button closer */
-}
-
-.navbar .profile-pic-navbar:hover {
-    transform: scale(1.1);
-}
-
-/* Profile Container */
-.profile-container {
-    background: #112240;
+/* Articles Section Styling */
+.articles-section, .user-section-container {
+    background: #1c2a44; /* Same background color as articles section */
     border-radius: 10px;
     padding: 30px;
-    max-width: 800px;
+    max-width: 1000px;
     margin: 40px auto;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Similar shadow to articles section */
+}
+
+.articles-section h2, .user-section-container h1 {
+    font-size: 2rem;
+    color: #64ffda;
+    margin-bottom: 30px;
 }
 
 /* Profile Picture in Profile Section */
@@ -98,10 +36,10 @@ h1 {
     border-radius: 50%;
     object-fit: cover;
     margin-bottom: 30px;
-    border: 2px solid #3E92CC; /* Changed the border color to #3E92CC */
+    border: 2px solid #3E92CC;
 }
 
-/* Form Styling */
+/* Profile Form Styling */
 form {
     display: flex;
     flex-direction: column;
@@ -135,11 +73,6 @@ form textarea:focus {
     border-color: #3e92cc;
 }
 
-form textarea {
-    resize: vertical;
-    min-height: 120px;
-}
-
 form button {
     padding: 12px 20px;
     background-color: #64ffda;
@@ -156,108 +89,44 @@ form button:hover {
     background-color: #52e6c6;
 }
 
-/* Profile Section Specialties and Interests */
-select[multiple] {
-    height: 150px;
-}
-
-label[for="specialties"],
-label[for="interests"] {
-    font-size: 1.2rem;
-    color: #64ffda;
-}
-
-/* Profile Option Row */
-.profile-option-row {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-/* Profile Input Fields */
-.profile-option-row select,
-.profile-option-row input {
-    margin-bottom: 15px;
-}
-
-/* Fix input and select sizes */
-input[type="file"],
-select[multiple] {
-    width: 100%;
-}
-
-input[type="file"] {
-    padding: 8px;
-    font-size: 1rem;
-}
-
-/* Bio Section */
-textarea#description {
-    height: 150px;
-}
-
-/* Profile Page Text */
-.profile-container h1 {
-    font-size: 2rem;
-    color: #64ffda;
-    margin-bottom: 20px;
-}
-
-/* User Articles Section */
-.user-articles {
-    margin-top: 40px;
-    text-align: left;
-    background: #1c2a44; /* Dark background to match the profile container */
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    max-width: 800px; /* Match the width of the profile container */
-    margin: 40px auto; /* Center the container horizontally */
-}
-
-/* Articles Section Heading */
-.user-articles h2 {
-    font-size: 1.8rem;
-    color: #64ffda; /* Light blue color for the heading */
-    margin-bottom: 20px;
-}
-
-/* Articles List */
-.user-articles ul {
+/* Articles Section List Styling */
+.articles-section ul {
     list-style-type: none;
     padding-left: 0;
 }
 
-/* Individual Article Item */
-.user-articles .article-item {
-    background: #112240; /* Slightly lighter background for each article item */
-    margin-bottom: 20px;
+.articles-section .article-item {
+    background: #1c2a44;
     padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-/* Article Title */
-.user-articles .article-item h3 {
+.articles-section .article-item h3 {
     font-size: 1.4rem;
     color: #64ffda;
     margin-bottom: 10px;
 }
 
-/* Article Date */
-.user-articles .article-item p {
+.articles-section .article-item p {
     font-size: 1rem;
     color: #B0C4DE;
     margin: 5px 0;
 }
 
-/* Article Links */
-.user-articles .article-item a {
-    text-decoration: none;
-    color: #64ffda; /* Link color matching the theme */
-    transition: color 0.3s ease;
+.articles-section .article-item form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
-.user-articles .article-item a:hover {
-    color: #52e6c6; /* Light green color on hover */
+.navbar .avatar-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px; /* Adjust width to the intended size */
+    height: 50px; /* Adjust height to the intended size */
+    border-radius: 50%;
+    overflow: visible; /* Ensure the button is not clipped */
 }

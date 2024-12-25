@@ -1,92 +1,93 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
-    <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
-</head>
-<body>
-    <!-- Navbar -->
-    <nav class="navbar">
-        <div class="logo">Lab Portal</div>
-        <ul class="nav-links">
-            <li><a href="{{ route('home') }}">Home</a></li>
-            <li><a href="about.php">About</a></li>
-            <li><a href="{{ route('profile') }}" class="active">Profile</a></li>
-        </ul>
-        <a href="{{ route('logout') }}">
-            <img src="{{ asset('storage/' . (auth()->user()->profile_picture ?: 'profile_pictures/default.png')) }}" 
-                 alt="Profile Picture" class="profile-pic-large">
-        </a>
-    </nav>
+@extends('layouts.app')
 
-    <!-- Profile Section -->
-    <div class="profile-container">
-        <h1>Welcome, {{ auth()->user()->username }}!</h1>
-        <img src="{{ asset('storage/' . (auth()->user()->profile_picture ?: 'profile_pictures/default_large.png')) }}" 
-             alt="Profile Picture" class="profile-pic-large">
+@section('styles')
+    <link href="{{ asset('css/profile.css') }}" rel="stylesheet">
+@endsection
 
-        <form method="POST" enctype="multipart/form-data" action="{{ route('profile') }}">
+@section('content')
+    <h1>Profile</h1>
+    
+    <!-- User Profile Section -->
+    <div class="user-section-container">
+        <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
             @csrf
-            <!-- Profile Picture -->
-            <label for="profile_picture">Change Profile Picture:</label>
-            <input type="file" name="profile_picture" id="profile_picture" accept="image/*">
 
-            <!-- Description (Bio) -->
-            <label for="description">Bio:</label>
-            <textarea name="description" id="description" rows="5">{{ old('description', auth()->user()->description) }}</textarea>
+            <!-- Profile Picture Section -->
+            <div class="profile-picture-container">
+                <img 
+                    src="{{ $user->profile_picture ? asset('storage/' . $user->profile_picture) : asset('attachments/default.png') }}" 
+                    alt="Profile Picture" 
+                    class="profile-pic-large"
+                >
+                <input type="file" name="profile_picture" accept="image/*">
+            </div>
 
-            <!-- Sex -->
-            <label for="sex">Sex:</label>
-            <select name="sex" id="sex">
-                <option value="Male" {{ old('sex', auth()->user()->sex) === 'Male' ? 'selected' : '' }}>Male</option>
-                <option value="Female" {{ old('sex', auth()->user()->sex) === 'Female' ? 'selected' : '' }}>Female</option>
-                <option value="Other" {{ old('sex', auth()->user()->sex) === 'Other' ? 'selected' : '' }}>Other</option>
-            </select>
+            <!-- Profile Form Fields -->
+            <label>Email</label>
+            <input type="email" name="email" value="{{ $user->email }}" required>
 
-            <!-- Specialties -->
-            <label for="specialties">Specialties:</label>
-            <select name="specialties[]" id="specialties" multiple>
-                @foreach ($specialties as $specialty)
-                    <option value="{{ $specialty->name }}" 
-                        {{ in_array($specialty->name, explode(',', auth()->user()->specialties)) ? 'selected' : '' }}>
-                        {{ $specialty->name }}
-                    </option>
-                @endforeach
-            </select>
+            <label>Password</label>
+            <input type="password" name="password" placeholder="Enter a new password (optional)">
 
-            <!-- Interests -->
-            <label for="interests">Interests:</label>
-            <select name="interests[]" id="interests" multiple>
-                @foreach (['AI Research', 'Data Science', 'Cybersecurity', 'Machine Learning', 'Software Engineering'] as $interest)
+            <label>Interests</label>
+            <select name="interests[]" multiple>
+                @foreach(['Technology', 'Art', 'Music', 'Sports', 'Travel'] as $interest)
                     <option value="{{ $interest }}" 
-                        {{ in_array($interest, explode(',', auth()->user()->interests)) ? 'selected' : '' }}>
-                        {{ $interest }}
-                    </option>
+                        {{ is_array($user->interests) && in_array($interest, $user->interests) ? 'selected' : '' }}>{{ $interest }}</option>
                 @endforeach
             </select>
+            
+            <label>Specialties</label>
+            <select name="specialties[]" multiple>
+                @foreach(['Programming', 'Design', 'Writing', 'Marketing', 'Leadership'] as $specialty)
+                    <option value="{{ $specialty }}" 
+                        {{ is_array($user->specialties) && in_array($specialty, $user->specialties) ? 'selected' : '' }}>{{ $specialty }}</option>
+                @endforeach
+            </select>
+
+            <label>Sex</label>
+            <select name="sex">
+                <option value="Male" {{ $user->sex == 'Male' ? 'selected' : '' }}>Male</option>
+                <option value="Female" {{ $user->sex == 'Female' ? 'selected' : '' }}>Female</option>
+                <option value="Other" {{ $user->sex == 'Other' ? 'selected' : '' }}>Other</option>
+            </select>
+
+            <label>Description</label>
+            <textarea name="description">{{ $user->description }}</textarea>
 
             <button type="submit">Save Changes</button>
         </form>
+
+        <form method="POST" action="{{ route('profile.delete') }}">
+            @csrf
+            <button type="submit" onclick="return confirm('Are you sure you want to delete your account?')">Delete Account</button>
+        </form>
     </div>
 
-    <!-- Display User's Articles -->
-    <div class="user-articles">
+    <!-- Articles Section -->
+    <div class="articles-section">
         <h2>Your Articles</h2>
         @if ($articles->isEmpty())
-            <p>You haven't posted any articles yet.</p>
+            <p>You haven't written any articles yet.</p>
         @else
             <ul>
-                @foreach ($articles as $article)
+                @foreach($articles as $article)
                     <li class="article-item">
-                        <h3><a href="{{ $article->link }}" target="_blank">{{ $article->title }}</a></h3>
-                        <p>Posted on: {{ $article->created_at->format('F j, Y') }}</p>
+                        <h3>{{ $article->title }}</h3>
+                        <p>Published on: {{ $article->created_at->format('M d, Y') }}</p>
+                        <form method="POST" action="{{ route('profile.articles.update', $article->id) }}">
+                            @csrf
+                            <label>Title</label>
+                            <input type="text" name="title" value="{{ $article->title }}" required>
+                        
+                            <label>Article Link</label>
+                            <input type="url" name="link" value="{{ $article->link }}" required>
+                        
+                            <button type="submit">Update Article</button>
+                        </form>
                     </li>
                 @endforeach
             </ul>
         @endif
     </div>
-
-</body>
-</html>
+@endsection

@@ -9,15 +9,14 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserProfileController;
 
+// Redirect / to the login page
+Route::get('/', function () {
+    return redirect()->route('login');
+});
+
+// About routes - Article management on the about page
 Route::get('/about', [ArticleController::class, 'about'])->name('about');
 Route::post('/about', [ArticleController::class, 'store'])->middleware('auth');
-
-
-
-// Public routes
-Route::get('/', function () {
-    return view('home');
-});
 
 // Authentication routes
 Route::controller(AuthController::class)->group(function () {
@@ -30,21 +29,19 @@ Route::controller(AuthController::class)->group(function () {
 
 // Protected routes (requires login)
 Route::middleware('auth')->group(function () {
-    // Home page
+    // Home page route
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-  
+    // Profile routes
+    Route::get('/profile', [UserProfileController::class, 'index'])->name('profile'); // View Profile page
+    Route::post('/profile/update', [UserProfileController::class, 'updateProfile'])->name('profile.update'); // Update profile
+    Route::post('/profile/delete', [UserProfileController::class, 'deleteAccount'])->name('profile.delete'); // Delete account
 
+    // Article management within profile
+    Route::post('/profile/articles/{id}/update', [UserProfileController::class, 'updateArticle'])->name('profile.articles.update'); // Update article
+    Route::delete('/profile/articles/{id}', [UserProfileController::class, 'deleteArticle'])->name('profile.articles.delete'); // Delete article
 
-    Route::get('/profile', [UserProfileController::class, 'show'])->name('profile');
-    Route::post('/profile', [UserProfileController::class, 'update']);
-    
-
-
-
-    // Resourceful routes
-    Route::resource('users', UserController::class);
-    Route::resource('articles', ArticleController::class);
+    // Voting and specialty routes
     Route::resource('votes', UserVoteController::class);
     Route::resource('specialties', SpecialtyController::class);
 });

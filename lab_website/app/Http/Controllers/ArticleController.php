@@ -1,8 +1,9 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Article;
-use App\Models\Specialty;  // Add this import to access the Specialty model
+use App\Models\Specialty;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -41,15 +42,46 @@ class ArticleController extends Controller
             'title' => 'required|string|max:255',
             'link' => 'required|url',
         ]);
-
-        // Create a new article
+    
+        // Ensure the authenticated user is assigned as the author
         Article::create([
             'title' => $request->title,
             'link' => $request->link,
-            'author_id' => Auth::id(),
+            'author_id' => Auth::id(),  // Ensure this is set to the logged-in user
         ]);
-
+    
         // Redirect back with a success message
         return Redirect::back()->with('message', 'Article submitted successfully!');
+    }
+    
+
+    // Handle the article update in the profile page
+    public function update(Request $request, $id)
+    {
+        $article = Article::findOrFail($id);
+
+        // Validate and update article
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'link' => 'required|url',
+        ]);
+
+        $article->update($validatedData);
+
+        return redirect()->back()->with('success', 'Article updated successfully!');
+    }
+
+    // Handle the article deletion
+    public function destroy($id)
+    {
+        $article = Article::findOrFail($id);
+
+        // Ensure the user is the author before deleting
+        if ($article->author_id === Auth::id()) {
+            $article->delete();
+            return redirect()->back()->with('success', 'Article deleted successfully!');
+        }
+
+        return redirect()->back()->with('error', 'You are not authorized to delete this article!');
     }
 }

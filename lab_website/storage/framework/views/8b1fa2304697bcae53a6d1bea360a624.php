@@ -1,95 +1,95 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
-    <link rel="stylesheet" href="<?php echo e(asset('css/profile.css')); ?>">
-</head>
-<body>
-    <!-- Navbar -->
-    <nav class="navbar">
-        <div class="logo">Lab Portal</div>
-        <ul class="nav-links">
-            <li><a href="<?php echo e(route('home')); ?>">Home</a></li>
-            <li><a href="about.php">About</a></li>
-            <li><a href="<?php echo e(route('profile')); ?>" class="active">Profile</a></li>
-        </ul>
-        <a href="<?php echo e(route('logout')); ?>">
-            <img src="<?php echo e(asset('storage/' . (auth()->user()->profile_picture ?: 'profile_pictures/default.png'))); ?>" 
-                 alt="Profile Picture" class="profile-pic-large">
-        </a>
-    </nav>
 
-    <!-- Profile Section -->
-    <div class="profile-container">
-        <h1>Welcome, <?php echo e(auth()->user()->username); ?>!</h1>
-        <img src="<?php echo e(asset('storage/' . (auth()->user()->profile_picture ?: 'profile_pictures/default_large.png'))); ?>" 
-             alt="Profile Picture" class="profile-pic-large">
 
-        <form method="POST" enctype="multipart/form-data" action="<?php echo e(route('profile')); ?>">
+<?php $__env->startSection('styles'); ?>
+    <link href="<?php echo e(asset('css/profile.css')); ?>" rel="stylesheet">
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+    <h1>Profile</h1>
+    
+    <!-- User Profile Section -->
+    <div class="user-section-container">
+        <form method="POST" action="<?php echo e(route('profile.update')); ?>" enctype="multipart/form-data">
             <?php echo csrf_field(); ?>
-            <!-- Profile Picture -->
-            <label for="profile_picture">Change Profile Picture:</label>
-            <input type="file" name="profile_picture" id="profile_picture" accept="image/*">
 
-            <!-- Description (Bio) -->
-            <label for="description">Bio:</label>
-            <textarea name="description" id="description" rows="5"><?php echo e(old('description', auth()->user()->description)); ?></textarea>
+            <!-- Profile Picture Section -->
+            <div class="profile-picture-container">
+                <img 
+                    src="<?php echo e($user->profile_picture ? asset('storage/' . $user->profile_picture) : asset('attachments/default.png')); ?>" 
+                    alt="Profile Picture" 
+                    class="profile-pic-large"
+                >
+                <input type="file" name="profile_picture" accept="image/*">
+            </div>
 
-            <!-- Sex -->
-            <label for="sex">Sex:</label>
-            <select name="sex" id="sex">
-                <option value="Male" <?php echo e(old('sex', auth()->user()->sex) === 'Male' ? 'selected' : ''); ?>>Male</option>
-                <option value="Female" <?php echo e(old('sex', auth()->user()->sex) === 'Female' ? 'selected' : ''); ?>>Female</option>
-                <option value="Other" <?php echo e(old('sex', auth()->user()->sex) === 'Other' ? 'selected' : ''); ?>>Other</option>
-            </select>
+            <!-- Profile Form Fields -->
+            <label>Email</label>
+            <input type="email" name="email" value="<?php echo e($user->email); ?>" required>
 
-            <!-- Specialties -->
-            <label for="specialties">Specialties:</label>
-            <select name="specialties[]" id="specialties" multiple>
-                <?php $__currentLoopData = $specialties; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $specialty): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <option value="<?php echo e($specialty->name); ?>" 
-                        <?php echo e(in_array($specialty->name, explode(',', auth()->user()->specialties)) ? 'selected' : ''); ?>>
-                        <?php echo e($specialty->name); ?>
+            <label>Password</label>
+            <input type="password" name="password" placeholder="Enter a new password (optional)">
 
-                    </option>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-            </select>
-
-            <!-- Interests -->
-            <label for="interests">Interests:</label>
-            <select name="interests[]" id="interests" multiple>
-                <?php $__currentLoopData = ['AI Research', 'Data Science', 'Cybersecurity', 'Machine Learning', 'Software Engineering']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $interest): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <label>Interests</label>
+            <select name="interests[]" multiple>
+                <?php $__currentLoopData = ['Technology', 'Art', 'Music', 'Sports', 'Travel']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $interest): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <option value="<?php echo e($interest); ?>" 
-                        <?php echo e(in_array($interest, explode(',', auth()->user()->interests)) ? 'selected' : ''); ?>>
-                        <?php echo e($interest); ?>
-
-                    </option>
+                        <?php echo e(is_array($user->interests) && in_array($interest, $user->interests) ? 'selected' : ''); ?>><?php echo e($interest); ?></option>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </select>
+            
+            <label>Specialties</label>
+            <select name="specialties[]" multiple>
+                <?php $__currentLoopData = ['Programming', 'Design', 'Writing', 'Marketing', 'Leadership']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $specialty): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <option value="<?php echo e($specialty); ?>" 
+                        <?php echo e(is_array($user->specialties) && in_array($specialty, $user->specialties) ? 'selected' : ''); ?>><?php echo e($specialty); ?></option>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            </select>
+
+            <label>Sex</label>
+            <select name="sex">
+                <option value="Male" <?php echo e($user->sex == 'Male' ? 'selected' : ''); ?>>Male</option>
+                <option value="Female" <?php echo e($user->sex == 'Female' ? 'selected' : ''); ?>>Female</option>
+                <option value="Other" <?php echo e($user->sex == 'Other' ? 'selected' : ''); ?>>Other</option>
+            </select>
+
+            <label>Description</label>
+            <textarea name="description"><?php echo e($user->description); ?></textarea>
 
             <button type="submit">Save Changes</button>
         </form>
+
+        <form method="POST" action="<?php echo e(route('profile.delete')); ?>">
+            <?php echo csrf_field(); ?>
+            <button type="submit" onclick="return confirm('Are you sure you want to delete your account?')">Delete Account</button>
+        </form>
     </div>
 
-    <!-- Display User's Articles -->
-    <div class="user-articles">
+    <!-- Articles Section -->
+    <div class="articles-section">
         <h2>Your Articles</h2>
         <?php if($articles->isEmpty()): ?>
-            <p>You haven't posted any articles yet.</p>
+            <p>You haven't written any articles yet.</p>
         <?php else: ?>
             <ul>
                 <?php $__currentLoopData = $articles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $article): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <li class="article-item">
-                        <h3><a href="<?php echo e($article->link); ?>" target="_blank"><?php echo e($article->title); ?></a></h3>
-                        <p>Posted on: <?php echo e($article->created_at->format('F j, Y')); ?></p>
+                        <h3><?php echo e($article->title); ?></h3>
+                        <p>Published on: <?php echo e($article->created_at->format('M d, Y')); ?></p>
+                        <form method="POST" action="<?php echo e(route('profile.articles.update', $article->id)); ?>">
+                            <?php echo csrf_field(); ?>
+                            <label>Title</label>
+                            <input type="text" name="title" value="<?php echo e($article->title); ?>" required>
+                        
+                            <label>Article Link</label>
+                            <input type="url" name="link" value="<?php echo e($article->link); ?>" required>
+                        
+                            <button type="submit">Update Article</button>
+                        </form>
                     </li>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </ul>
         <?php endif; ?>
     </div>
+<?php $__env->stopSection(); ?>
 
-</body>
-</html>
-<?php /**PATH C:\xampp\htdocs\scienceLab\lab_website\resources\views/profile.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\scienceLab\lab_website\resources\views/profile.blade.php ENDPATH**/ ?>

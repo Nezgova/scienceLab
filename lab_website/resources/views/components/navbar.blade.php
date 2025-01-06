@@ -8,9 +8,8 @@
             <!-- Logout Form -->
             <form action="{{ route('logout') }}" method="POST" style="display: inline;">
                 @csrf
-                <button type="submit" title="Logout ({{ explode('@', $user->email)[0] }})" class="navbar-avatar">
-                    <!-- Ensure the correct path is used for the profile picture -->
-                    <img src="{{ $user->profile_picture ? asset('storage/' . $user->profile_picture) : asset('attachments/default.png') }}" alt="Profile Picture" class="avatar-pic">
+                <button type="submit" title="Logout ({{ explode('@', Auth::user()->email)[0] }})" class="navbar-avatar">
+                    <img src="{{ Auth::user()->profile_picture ? asset('storage/' . Auth::user()->profile_picture) : asset('attachments/default.png') }}" alt="Profile Picture" class="avatar-pic">
                 </button>
             </form>
         </li>

@@ -5,41 +5,86 @@ body {
     color: #fff;
     margin: 0;
     padding: 0;
+    line-height: 1.6;
 }
 
 h1, h2 {
     font-size: 2.5rem;
     color: #64ffda;
     margin-bottom: 30px;
+    text-align: center;
+    text-shadow: 0 0 10px rgba(100, 255, 218, 0.5);
 }
 
-/* Articles Section Styling */
+/* Profile Section and Articles Section */
 .articles-section, .user-section-container {
-    background: #1c2a44; /* Same background color as articles section */
-    border-radius: 10px;
+    background: linear-gradient(145deg, #1c2a44, #243b5e);
+    border-radius: 15px;
     padding: 30px;
     max-width: 1000px;
     margin: 40px auto;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Similar shadow to articles section */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.articles-section:hover, .user-section-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
 }
 
 .articles-section h2, .user-section-container h1 {
     font-size: 2rem;
     color: #64ffda;
     margin-bottom: 30px;
+    text-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
 }
 
-/* Profile Picture in Profile Section */
+/* Profile Picture Styling */
+.profile-picture-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 15px;
+}
+
 .profile-pic-large {
     width: 150px;
     height: 150px;
     border-radius: 50%;
     object-fit: cover;
     margin-bottom: 30px;
-    border: 2px solid #3E92CC;
+    border: 3px solid #64ffda;
+    background-color: #1c2a44; /* Fallback color */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 0 15px rgba(100, 255, 218, 0.5);
 }
 
-/* Profile Form Styling */
+.profile-pic-large:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 30px rgba(100, 255, 218, 0.8);
+}
+
+/* Input Styling for Upload */
+.profile-picture-container input {
+    margin-top: 10px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #1c2a44;
+    border: 2px solid #64ffda;
+    border-radius: 5px;
+    padding: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.profile-picture-container input:hover {
+    background-color: #0e2a40;
+    color: #64ffda;
+}
+
+/* Form Styling */
 form {
     display: flex;
     flex-direction: column;
@@ -49,8 +94,7 @@ form {
 
 form label {
     font-size: 1.2rem;
-    color: #fff;
-    text-align: left;
+    color: #b0c4de;
 }
 
 form input,
@@ -60,10 +104,9 @@ form textarea {
     background-color: #1c2a44;
     color: #fff;
     border: 2px solid #64ffda;
-    border-radius: 5px;
+    border-radius: 8px;
     font-size: 1rem;
-    width: 100%;
-    box-sizing: border-box;
+    transition: border-color 0.3s, background-color 0.3s;
 }
 
 form input:focus,
@@ -71,62 +114,23 @@ form select:focus,
 form textarea:focus {
     outline: none;
     border-color: #3e92cc;
+    background-color: #0e2a40;
 }
 
 form button {
     padding: 12px 20px;
     background-color: #64ffda;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     font-size: 1.1rem;
     font-weight: bold;
     color: #0b192c;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: background-color 0.3s, transform 0.3s;
 }
 
 form button:hover {
     background-color: #52e6c6;
-}
-
-/* Articles Section List Styling */
-.articles-section ul {
-    list-style-type: none;
-    padding-left: 0;
-}
-
-.articles-section .article-item {
-    background: #1c2a44;
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-}
-
-.articles-section .article-item h3 {
-    font-size: 1.4rem;
-    color: #64ffda;
-    margin-bottom: 10px;
-}
-
-.articles-section .article-item p {
-    font-size: 1rem;
-    color: #B0C4DE;
-    margin: 5px 0;
-}
-
-.articles-section .article-item form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.navbar .avatar-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 50px; /* Adjust width to the intended size */
-    height: 50px; /* Adjust height to the intended size */
-    border-radius: 50%;
-    overflow: visible; /* Ensure the button is not clipped */
+    transform: translateY(-3px);
+    box-shadow: 0 0 15px rgba(82, 230, 198, 0.7);
 }

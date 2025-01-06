@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title', 'Profile') <!-- Set the page title -->
 @section('styles')
     <link href="{{ asset('css/profile.css') }}" rel="stylesheet">
 @endsection
@@ -14,7 +14,7 @@
             <!-- Profile Picture Section -->
             <div class="profile-picture-container">
                 <img 
-                    src="{{ $user->profile_picture ? asset('storage/' . $user->profile_picture) : asset('attachments/default.png') }}" 
+                    src="{{ Auth::user()->profile_picture ? asset('storage/' . Auth::user()->profile_picture) : asset('attachments/default.png') }}" 
                     alt="Profile Picture" 
                     class="profile-pic-large"
                 >
@@ -23,7 +23,7 @@
 
             <!-- Profile Form Fields -->
             <label>Email</label>
-            <input type="email" name="email" value="{{ $user->email }}" required>
+            <input type="email" name="email" value="{{ Auth::user()->email }}" required>
 
             <label>Password</label>
             <input type="password" name="password" placeholder="Enter a new password (optional)">
@@ -32,7 +32,7 @@
             <select name="interests[]" multiple>
                 @foreach(['Technology', 'Art', 'Music', 'Sports', 'Travel'] as $interest)
                     <option value="{{ $interest }}" 
-                        {{ is_array($user->interests) && in_array($interest, $user->interests) ? 'selected' : '' }}>{{ $interest }}</option>
+                        {{ is_array(Auth::user()->interests) && in_array($interest, Auth::user()->interests) ? 'selected' : '' }}>{{ $interest }}</option>
                 @endforeach
             </select>
 
@@ -40,19 +40,19 @@
             <select name="specialties[]" multiple>
                 @foreach(['Programming', 'Design', 'Writing', 'Marketing', 'Leadership'] as $specialty)
                     <option value="{{ $specialty }}" 
-                        {{ is_array($user->specialties) && in_array($specialty, $user->specialties) ? 'selected' : '' }}>{{ $specialty }}</option>
+                        {{ is_array(Auth::user()->specialties) && in_array($specialty, Auth::user()->specialties) ? 'selected' : '' }}>{{ $specialty }}</option>
                 @endforeach
             </select>
 
             <label>Sex</label>
             <select name="sex">
-                <option value="Male" {{ $user->sex == 'Male' ? 'selected' : '' }}>Male</option>
-                <option value="Female" {{ $user->sex == 'Female' ? 'selected' : '' }}>Female</option>
-                <option value="Other" {{ $user->sex == 'Other' ? 'selected' : '' }}>Other</option>
+                <option value="Male" {{ Auth::user()->sex == 'Male' ? 'selected' : '' }}>Male</option>
+                <option value="Female" {{ Auth::user()->sex == 'Female' ? 'selected' : '' }}>Female</option>
+                <option value="Other" {{ Auth::user()->sex == 'Other' ? 'selected' : '' }}>Other</option>
             </select>
 
             <label>Description</label>
-            <textarea name="description">{{ $user->description }}</textarea>
+            <textarea name="description">{{ Auth::user()->description }}</textarea>
 
             <button type="submit">Save Changes</button>
         </form>

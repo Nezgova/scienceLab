@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,7 +17,7 @@ class Article extends Model
         return $this->belongsTo(User::class, 'author_id');
     }
 
-    public function votes()
+    public function userVotes()
     {
         return $this->hasMany(UserVote::class);
     }
@@ -24,13 +25,13 @@ class Article extends Model
     // Get upvotes for this article
     public function upvotes()
     {
-        return $this->hasMany(UserVote::class)->where('vote', 1);
+        return $this->userVotes()->where('vote', 1);
     }
 
     // Get downvotes for this article
     public function downvotes()
     {
-        return $this->hasMany(UserVote::class)->where('vote', -1);
+        return $this->userVotes()->where('vote', -1);
     }
 
     // Get net votes (upvotes - downvotes)
@@ -42,6 +43,6 @@ class Article extends Model
     // Check if a user has voted on this article and what vote they cast
     public function userVote($user_id)
     {
-        return $this->votes()->where('user_id', $user_id)->first();
+        return $this->userVotes()->where('user_id', $user_id)->first();
     }
 }

@@ -1,5 +1,4 @@
-
-
+<?php $__env->startSection('title', 'About Us'); ?> <!-- Set the page title -->
 <?php $__env->startSection('styles'); ?>
     <link href="<?php echo e(asset('css/about.css')); ?>" rel="stylesheet">
 <?php $__env->stopSection(); ?>
@@ -42,30 +41,26 @@
                         <p>Posted by <?php echo e($article->author->username); ?> on <?php echo e($article->created_at->format('F j, Y')); ?></p>
                         <a href="<?php echo e($article->link); ?>" target="_blank">Read Article</a>
                         
-                        <!-- Voting Buttons -->
+                        <!-- Voting System -->
                         <div class="vote-container">
-                            <form action="<?php echo e(route('votes.store')); ?>" method="POST">
+                            <!-- Upvote Button -->
+                            <form action="<?php echo e(route('articles.upvote', $article->id)); ?>" method="POST" class="vote-form" data-id="<?php echo e($article->id); ?>">
                                 <?php echo csrf_field(); ?>
-                                <input type="hidden" name="article_id" value="<?php echo e($article->id); ?>">
-                                <button type="submit" name="vote" value="1" class="vote-btn">Upvote</button>
+                                <button type="submit" class="vote-btn upvote-btn" data-vote="upvote">Upvote</button>
                             </form>
-                            <form action="<?php echo e(route('votes.store')); ?>" method="POST">
+                        
+                            <!-- Downvote Button -->
+                            <form action="<?php echo e(route('articles.downvote', $article->id)); ?>" method="POST" class="vote-form" data-id="<?php echo e($article->id); ?>">
                                 <?php echo csrf_field(); ?>
-                                <input type="hidden" name="article_id" value="<?php echo e($article->id); ?>">
-                                <button type="submit" name="vote" value="-1" class="vote-btn">Downvote</button>
+                                <button type="submit" class="vote-btn downvote-btn" data-vote="downvote">Downvote</button>
                             </form>
                         </div>
-                        <p class="vote-count">
-                            Votes: 
-                            <?php
-                                // Ensure votes is loaded as a collection, or set to an empty array if not
-                                $totalVotes = $article->votes ? $article->votes->sum('vote') : 0;
-                            ?>
-                            <?php echo e($totalVotes); ?>
+                        
+                        <!-- Vote Count -->
+                        <p class="vote-count" data-id="<?php echo e($article->id); ?>">
+                            Votes: <?php echo e($article->userVotes instanceof Illuminate\Database\Eloquent\Collection ? $article->userVotes->sum('vote') : 0); ?>
 
                         </p>
-                        
-                        
                     </div>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             <?php else: ?>
@@ -81,4 +76,57 @@
     </div>
 <?php $__env->stopSection(); ?>
 
+<?php $__env->startSection('scripts'); ?>
+<script>
+    console.log("AJAX voting script loaded");
+
+    document.addEventListener("DOMContentLoaded", () => {
+        // Prevent the default form submission first
+        const voteForms = document.querySelectorAll(".vote-form");
+        voteForms.forEach(form => {
+            form.addEventListener("submit", function(e) {
+                e.preventDefault();  // This must be called first
+    console.log("Form submission intercepted for form:", form);
+                const formData = new FormData(form);
+                const url = form.action;
+                const articleId = form.getAttribute("data-id");
+                const voteCountElement = document.querySelector(`.vote-count[data-id="${articleId}"]`);
+
+                fetch(url, {
+                    method: "POST",
+                    body: formData,
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest"
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Update vote count
+                    voteCountElement.textContent = `Votes: ${data.totalVotes}`;
+
+                    // Update button states
+                    const container = form.closest(".vote-container");
+                    const upvoteBtn = container.querySelector(".upvote-btn");
+                    const downvoteBtn = container.querySelector(".downvote-btn");
+
+                    upvoteBtn.classList.remove("active-vote");
+                    downvoteBtn.classList.remove("active-vote");
+
+                    if (data.userVote === 1) {
+                        upvoteBtn.classList.add("active-vote");
+                    } else if (data.userVote === -1) {
+                        downvoteBtn.classList.add("active-vote");
+                    }
+                })
+                .catch(error => {
+                    console.error("Vote submission failed:", error);
+                    alert("An error occurred while processing your vote.");
+                });
+
+                return false; // Extra prevention of form submission
+            });
+        });
+    });
+</script>
+<?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\scienceLab\lab_website\resources\views/about.blade.php ENDPATH**/ ?>

@@ -19,7 +19,8 @@ Route::get('/about', [ArticleController::class, 'about'])->name('about');
 Route::post('/about', [ArticleController::class, 'store'])->middleware('auth');
 
 // Voting routes (Upvote and Downvote)
-Route::post('/about/{article}/vote', [UserVoteController::class, 'store'])->name('vote.store'); // For upvote and downvote actions
+Route::post('/articles/{id}/upvote', [ArticleController::class, 'upvote'])->name('articles.upvote');
+Route::post('/articles/{id}/downvote', [ArticleController::class, 'downvote'])->name('articles.downvote');
 
 // Authentication routes
 Route::controller(AuthController::class)->group(function () {
@@ -44,7 +45,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile/articles/{id}/update', [UserProfileController::class, 'updateArticle'])->name('profile.articles.update'); // Update article
     Route::delete('/profile/articles/{id}', [UserProfileController::class, 'deleteArticle'])->name('profile.articles.delete'); // Delete article
 
-    // Voting and specialty routes
-    Route::resource('votes', UserVoteController::class);
+    // Specialty routes
     Route::resource('specialties', SpecialtyController::class);
 });

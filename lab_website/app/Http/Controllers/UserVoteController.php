@@ -2,52 +2,43 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Article;
 use App\Models\UserVote;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserVoteController extends Controller
 {
-    public function index()
+    public function upvote($id)
     {
-        $votes = UserVote::all();
-        return response()->json($votes);
+        $user = Auth::user();
+        $article = Article::findOrFail($id);
+
+        $existingVote = $article->votes()->where('user_id', $user->id)->first();
+
+        if ($existingVote) {
+            $existingVote->delete();
+        } else {
+            $article->votes()->create(['user_id' => $user->id, 'vote' => 1]);
+        }
+
+        return response()->json(['totalVotes' => $article->votes()->sum('vote')]);
     }
 
-    public function store(Request $request)
+    public function downvote($id)
     {
-        $validated = $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'article_id' => 'required|exists:articles,id',
-            'vote' => 'required|integer',
-        ]);
+        $user = Auth::user();
+        $article = Article::findOrFail($id);
 
-        $vote = UserVote::create($validated);
-        return response()->json($vote);
-    }
+        $existingVote = $article->votes()->where('user_id', $user->id)->first();
 
-    public function show($id)
-    {
-        $vote = UserVote::findOrFail($id);
-        return response()->json($vote);
-    }
+        if ($existingVote) {
+            $existingVote->delete();
+        } else {
+            $article->votes()->create(['user_id' => $user->id, 'vote' => -1]);
+        }
 
-    public function update(Request $request, $id)
-    {
-        $vote = UserVote::findOrFail($id);
-        $validated = $request->validate([
-            'user_id' => 'exists:users,id',
-            'article_id' => 'exists:articles,id',
-            'vote' => 'integer',
-        ]);
-
-        $vote->update($validated);
-        return response()->json($vote);
-    }
-
-    public function destroy($id)
-    {
-        $vote = UserVote::findOrFail($id);
-        $vote->delete();
-        return response()->json(['message' => 'Vote deleted successfully']);
+        return response()->json(['totalVotes' => $article->votes()->sum('vote')]);
     }
 }
+

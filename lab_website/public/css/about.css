@@ -3,13 +3,14 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
 }
 
-/* Body Background */
+/* Body Styling */
 body {
-    background-color: #0B192C;
-    color: white;
+    background: linear-gradient(135deg, #0B192C, #112240);
+    color: #D1E8FF;
+    overflow-x: hidden;
 }
 
 /* Navbar Styling */
@@ -17,24 +18,32 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #0B192C;
+    background: linear-gradient(90deg, #0B192C, #1C2A44);
     padding: 1rem 2rem;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     position: sticky;
     top: 0;
-    z-index: 10;
+    z-index: 100;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.navbar:hover {
+    background: linear-gradient(90deg, #112240, #1B3A58);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.8);
 }
 
 .navbar .logo {
-    font-size: 1.7rem;
+    font-size: 2rem;
     font-weight: bold;
-    color: #3E92CC;
+    color: #64FFDA;
     text-transform: uppercase;
-    transition: color 0.3s;
+    transition: transform 0.3s, color 0.3s;
+    cursor: pointer;
 }
 
 .navbar .logo:hover {
-    color: #B0C4DE;
+    color: #3E92CC;
+    transform: scale(1.1);
 }
 
 .navbar .nav-links {
@@ -47,93 +56,54 @@ body {
 .navbar .nav-links a {
     text-decoration: none;
     color: white;
+    font-size: 1.1rem;
     padding: 0.5rem 1rem;
-    border-radius: 5px;
-    transition: background 0.3s, color 0.3s;
-}
-
-.navbar .nav-links a.active {
-    background-color: #3E92CC;
-    color: white;
+    border-radius: 8px;
+    background: transparent;
+    transition: background 0.4s, color 0.3s, box-shadow 0.3s;
 }
 
 .navbar .nav-links a:hover {
-    background-color: #3E92CC;
-    color: white;
+    background: rgba(100, 255, 218, 0.2);
+    color: #64FFDA;
+    box-shadow: 0 0 10px rgba(100, 255, 218, 0.5);
 }
 
-/* Profile Picture in Navbar */
-.profile-pic-container {
-    display: flex;
-    align-items: center;
-    position: relative;
-}
-
-.profile-pic-container:hover::after {
-    content: attr(title);
-    position: absolute;
-    bottom: -35px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0, 0, 0, 0.8);
-    color: white;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 12px;
-    white-space: nowrap;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-}
-
-.profile-pic {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 2px solid #3E92CC;
-    cursor: pointer;
-    transition: transform 0.3s, border-color 0.3s;
-    object-fit: cover;
-}
-
-.profile-pic:hover {
-    transform: scale(1.1);
-    border-color: #B0C4DE;
-}
-
-/* Main Content Styling */
-.main-content {
-    padding: 2rem;
+/* Hero Section */
+h1 {
+    font-size: 3rem;
     text-align: center;
+    margin: 2rem 0;
+    color: #64FFDA;
+    text-shadow: 0 0 15px rgba(100, 255, 218, 0.5);
 }
 
-.main-content h1 {
-    font-size: 2.5rem;
+p {
+    text-align: center;
+    font-size: 1.5rem;
     margin: 1rem 0;
-    color: #3E92CC;
-}
-
-.main-content p {
-    font-size: 1.2rem;
     line-height: 1.6;
     color: #B0C4DE;
 }
 
-/* Search Form Styling */
+/* Search Bar Styling */
 .search-form {
     display: flex;
     justify-content: center;
-    margin: 2rem 0;
+    margin: 2rem auto;
+    width: 100%;
+    max-width: 600px;
 }
 
 .search-form input[type="text"] {
-    width: 60%;
-    max-width: 400px;
-    padding: 0.8rem;
+    flex: 1;
+    padding: 1rem;
     border: 2px solid #3E92CC;
-    border-radius: 5px 0 0 5px;
+    border-right: none;
+    border-radius: 8px 0 0 8px;
     background-color: #1C2A44;
     color: white;
     font-size: 1rem;
-    outline: none;
     transition: border-color 0.3s, box-shadow 0.3s;
 }
 
@@ -143,120 +113,137 @@ body {
 
 .search-form input[type="text"]:focus {
     border-color: #64FFDA;
-    box-shadow: 0 0 8px #64FFDA;
+    box-shadow: 0 0 10px #64FFDA;
+    outline: none;
 }
 
 .search-form button {
-    padding: 0.8rem 1.5rem;
-    background-color: #3E92CC;
+    padding: 0.9rem 1.5rem;
+    background: linear-gradient(135deg, #3E92CC, #64FFDA);
     color: white;
     border: none;
-    border-radius: 0 5px 5px 0;
+    border-radius: 0 8px 8px 0;
     cursor: pointer;
     font-size: 1rem;
-    transition: background 0.3s, box-shadow 0.3s;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
 }
 
 .search-form button:hover {
-    background-color: #64FFDA;
-    box-shadow: 0 0 8px #64FFDA;
+    background: linear-gradient(135deg, #64FFDA, #3E92CC);
+    transform: scale(1.05);
+    box-shadow: 0 0 10px #64FFDA;
 }
 
-/* Input Fields (Article Title & Link) */
-.form-group {
+/* Post Article Form Styling */
+.post-article-form {
+    background: #112240;
+    border-radius: 15px;
+    padding: 2rem;
+    margin: 2rem auto;
+    max-width: 600px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.post-article-form:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.8);
+}
+
+.post-article-form h2 {
+    font-size: 2rem;
+    color: #64FFDA;
     margin-bottom: 1rem;
 }
 
-.form-group input[type="text"],
-.form-group input[type="url"] {
-    width: 60%;
-    max-width: 400px;
+.post-article-form input[type="text"],
+.post-article-form input[type="url"] {
+    width: 80%;
     padding: 0.8rem;
+    margin: 0.5rem auto;
     border: 2px solid #3E92CC;
-    border-radius: 5px;
-    background-color: #1C2A44;
+    border-radius: 8px;
+    background: #1C2A44;
     color: white;
     font-size: 1rem;
-    outline: none;
     transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-.form-group input[type="text"]::placeholder,
-.form-group input[type="url"]::placeholder {
-    color: #B0C4DE;
-}
-
-.form-group input[type="text"]:focus,
-.form-group input[type="url"]:focus {
+.post-article-form input[type="text"]:focus,
+.post-article-form input[type="url"]:focus {
     border-color: #64FFDA;
     box-shadow: 0 0 8px #64FFDA;
+    outline: none;
 }
 
-.form-group input[type="url"] {
+.post-article-form button {
+    background: linear-gradient(135deg, #3E92CC, #64FFDA);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
     margin-top: 1rem;
 }
 
-/* Articles Section Styling */
+.post-article-form button:hover {
+    background: linear-gradient(135deg, #64FFDA, #3E92CC);
+    transform: scale(1.05);
+    box-shadow: 0 0 12px #64FFDA;
+}
+
+/* Articles Section */
 .articles-section {
     padding: 3rem 2rem;
-    background-color: #0B192C;
 }
 
 .articles-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 1.5rem;
+    gap: 2rem;
 }
 
 .article {
-    background-color: #1C2A44;
+    background: #1C2A44;
+    border-radius: 15px;
     padding: 1.5rem;
-    width: 100%;
     max-width: 300px;
-    border-radius: 10px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .article:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.8);
 }
 
 .article h3 {
-    font-size: 1.6rem;
-    color: #3E92CC;
+    color: #64FFDA;
     margin-bottom: 1rem;
-    text-align: center;
-}
-
-.articles-section h2 {
-    text-align: center;
-    padding-bottom: 20px;
 }
 
 .article p {
-    font-size: 1.1rem;
     color: #B0C4DE;
     margin-bottom: 1rem;
-    text-align: center;
 }
 
 .article a {
     text-decoration: none;
-    color: #64FFDA;
+    color: #3E92CC;
     font-weight: bold;
 }
 
 .article a:hover {
+    color: #64FFDA;
     text-decoration: underline;
 }
 
-/* Updated Voting Buttons */
+/* Voting Section */
 .vote-container {
     display: flex;
     justify-content: center;
@@ -265,39 +252,25 @@ body {
 }
 
 .vote-btn {
-    background-color: #3E92CC;
+    background: linear-gradient(135deg, #3E92CC, #64FFDA);
     color: white;
-    padding: 10px 20px;
+    padding: 10px 15px;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background 0.3s;
+    font-size: 1rem;
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .vote-btn:hover {
-    background-color: #64FFDA;
+    transform: scale(1.1);
+    box-shadow: 0 0 12px #64FFDA;
 }
 
 .vote-count {
+    margin-top: 10px;
     font-size: 1.2rem;
     color: #64FFDA;
-    margin: 10px 0;
-}
-
-/* Submit Button */
-.button {
-    background-color: #3E92CC;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s;
-    margin-top: 20px;
-}
-
-.button:hover {
-    background-color: #64FFDA;
 }
 
 /* Pagination Styling */
@@ -310,31 +283,13 @@ body {
 .pagination a {
     color: #64FFDA;
     padding: 0.5rem 1rem;
-    border-radius: 5px;
+    border-radius: 8px;
     text-decoration: none;
-    transition: background 0.3s;
+    transition: background 0.3s, color 0.3s;
 }
 
 .pagination a:hover {
-    background-color: #64FFDA;
-    color: white;
-}
-/* Submit Button (Post Article) Styling */
-.post-article-form button[type="submit"] {
-    background-color: #3E92CC;
-    color: white;
-    padding: 8px 16px; /* Smaller padding for a more compact button */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s, box-shadow 0.3s;
-    font-size: 1rem;
-    width: auto; /* Ensure it doesn't stretch full width */
-    margin-top: 10px;
-}
-
-/* Hover Effect for Submit Button */
-.post-article-form button[type="submit"]:hover {
-    background-color: #64FFDA;
+    background: #64FFDA;
+    color: #112240;
     box-shadow: 0 0 8px #64FFDA;
 }

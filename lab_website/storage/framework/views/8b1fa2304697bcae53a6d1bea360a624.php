@@ -1,5 +1,5 @@
 
-
+<?php $__env->startSection('title', 'Profile'); ?> <!-- Set the page title -->
 <?php $__env->startSection('styles'); ?>
     <link href="<?php echo e(asset('css/profile.css')); ?>" rel="stylesheet">
 <?php $__env->stopSection(); ?>
@@ -14,7 +14,7 @@
             <!-- Profile Picture Section -->
             <div class="profile-picture-container">
                 <img 
-                    src="<?php echo e($user->profile_picture ? asset('storage/' . $user->profile_picture) : asset('attachments/default.png')); ?>" 
+                    src="<?php echo e(Auth::user()->profile_picture ? asset('storage/' . Auth::user()->profile_picture) : asset('attachments/default.png')); ?>" 
                     alt="Profile Picture" 
                     class="profile-pic-large"
                 >
@@ -23,7 +23,7 @@
 
             <!-- Profile Form Fields -->
             <label>Email</label>
-            <input type="email" name="email" value="<?php echo e($user->email); ?>" required>
+            <input type="email" name="email" value="<?php echo e(Auth::user()->email); ?>" required>
 
             <label>Password</label>
             <input type="password" name="password" placeholder="Enter a new password (optional)">
@@ -32,7 +32,7 @@
             <select name="interests[]" multiple>
                 <?php $__currentLoopData = ['Technology', 'Art', 'Music', 'Sports', 'Travel']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $interest): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <option value="<?php echo e($interest); ?>" 
-                        <?php echo e(is_array($user->interests) && in_array($interest, $user->interests) ? 'selected' : ''); ?>><?php echo e($interest); ?></option>
+                        <?php echo e(is_array(Auth::user()->interests) && in_array($interest, Auth::user()->interests) ? 'selected' : ''); ?>><?php echo e($interest); ?></option>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </select>
 
@@ -40,19 +40,19 @@
             <select name="specialties[]" multiple>
                 <?php $__currentLoopData = ['Programming', 'Design', 'Writing', 'Marketing', 'Leadership']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $specialty): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <option value="<?php echo e($specialty); ?>" 
-                        <?php echo e(is_array($user->specialties) && in_array($specialty, $user->specialties) ? 'selected' : ''); ?>><?php echo e($specialty); ?></option>
+                        <?php echo e(is_array(Auth::user()->specialties) && in_array($specialty, Auth::user()->specialties) ? 'selected' : ''); ?>><?php echo e($specialty); ?></option>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </select>
 
             <label>Sex</label>
             <select name="sex">
-                <option value="Male" <?php echo e($user->sex == 'Male' ? 'selected' : ''); ?>>Male</option>
-                <option value="Female" <?php echo e($user->sex == 'Female' ? 'selected' : ''); ?>>Female</option>
-                <option value="Other" <?php echo e($user->sex == 'Other' ? 'selected' : ''); ?>>Other</option>
+                <option value="Male" <?php echo e(Auth::user()->sex == 'Male' ? 'selected' : ''); ?>>Male</option>
+                <option value="Female" <?php echo e(Auth::user()->sex == 'Female' ? 'selected' : ''); ?>>Female</option>
+                <option value="Other" <?php echo e(Auth::user()->sex == 'Other' ? 'selected' : ''); ?>>Other</option>
             </select>
 
             <label>Description</label>
-            <textarea name="description"><?php echo e($user->description); ?></textarea>
+            <textarea name="description"><?php echo e(Auth::user()->description); ?></textarea>
 
             <button type="submit">Save Changes</button>
         </form>

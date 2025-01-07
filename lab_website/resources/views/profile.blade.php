@@ -43,7 +43,17 @@
                         {{ is_array(Auth::user()->specialties) && in_array($specialty, Auth::user()->specialties) ? 'selected' : '' }}>{{ $specialty }}</option>
                 @endforeach
             </select>
+            <p>Group: {{ Auth::user()->group ? Auth::user()->group->name : 'No group assigned' }}</p>
 
+            <label>Research Group</label>
+            <select name="group_id">
+                @foreach($groups as $group)
+                    <option value="{{ $group->id }}" {{ Auth::user()->group_id == $group->id ? 'selected' : '' }}>
+                        {{ $group->name }}
+                    </option>
+                @endforeach
+            </select>
+            
             <label>Sex</label>
             <select name="sex">
                 <option value="Male" {{ Auth::user()->sex == 'Male' ? 'selected' : '' }}>Male</option>
@@ -69,24 +79,34 @@
         @if ($articles->isEmpty())
             <p>You haven't written any articles yet.</p>
         @else
-            <ul>
-                @foreach($articles as $article)
-                    <li class="article-item">
-                        <h3>{{ $article->title }}</h3>
-                        <p>Published on: {{ $article->created_at->format('M d, Y') }}</p>
-                        <form method="POST" action="{{ route('profile.articles.update', $article->id) }}">
-                            @csrf
-                            <label>Title</label>
-                            <input type="text" name="title" value="{{ $article->title }}" required>
-                        
-                            <label>Article Link</label>
-                            <input type="url" name="link" value="{{ $article->link }}" required>
-                        
-                            <button type="submit">Update Article</button>
-                        </form>
-                    </li>
-                @endforeach
-            </ul>
+        <ul>
+            @foreach($articles as $article)
+                <li class="article-item">
+                    <h3>{{ $article->title }}</h3>
+                    <p>Published on: {{ $article->created_at->format('M d, Y') }}</p>
+        
+                    <!-- Display existing picture if available -->
+                    @if($article->picture)
+                        <img src="{{ asset('storage/' . $article->picture) }}" alt="Article Picture" class="article-image">
+                    @endif
+        
+                    <form method="POST" action="{{ route('profile.articles.update', $article->id) }}" enctype="multipart/form-data">
+                        @csrf
+                        <label>Title</label>
+                        <input type="text" name="title" value="{{ $article->title }}" required>
+                    
+                        <label>Article Link</label>
+                        <input type="url" name="link" value="{{ $article->link }}" required>
+                    
+                        <label>Picture</label>
+                        <input type="file" name="picture" accept="image/*">
+        
+                        <button type="submit">Update Article</button>
+                    </form>
+                </li>
+            @endforeach
+        </ul>
+        
         @endif
     </div>
 @endsection

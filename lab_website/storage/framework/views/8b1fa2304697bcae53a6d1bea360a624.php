@@ -43,7 +43,18 @@
                         <?php echo e(is_array(Auth::user()->specialties) && in_array($specialty, Auth::user()->specialties) ? 'selected' : ''); ?>><?php echo e($specialty); ?></option>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </select>
+            <p>Group: <?php echo e(Auth::user()->group ? Auth::user()->group->name : 'No group assigned'); ?></p>
 
+            <label>Research Group</label>
+            <select name="group_id">
+                <?php $__currentLoopData = $groups; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $group): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <option value="<?php echo e($group->id); ?>" <?php echo e(Auth::user()->group_id == $group->id ? 'selected' : ''); ?>>
+                        <?php echo e($group->name); ?>
+
+                    </option>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            </select>
+            
             <label>Sex</label>
             <select name="sex">
                 <option value="Male" <?php echo e(Auth::user()->sex == 'Male' ? 'selected' : ''); ?>>Male</option>
@@ -69,24 +80,34 @@
         <?php if($articles->isEmpty()): ?>
             <p>You haven't written any articles yet.</p>
         <?php else: ?>
-            <ul>
-                <?php $__currentLoopData = $articles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $article): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <li class="article-item">
-                        <h3><?php echo e($article->title); ?></h3>
-                        <p>Published on: <?php echo e($article->created_at->format('M d, Y')); ?></p>
-                        <form method="POST" action="<?php echo e(route('profile.articles.update', $article->id)); ?>">
-                            <?php echo csrf_field(); ?>
-                            <label>Title</label>
-                            <input type="text" name="title" value="<?php echo e($article->title); ?>" required>
-                        
-                            <label>Article Link</label>
-                            <input type="url" name="link" value="<?php echo e($article->link); ?>" required>
-                        
-                            <button type="submit">Update Article</button>
-                        </form>
-                    </li>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-            </ul>
+        <ul>
+            <?php $__currentLoopData = $articles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $article): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <li class="article-item">
+                    <h3><?php echo e($article->title); ?></h3>
+                    <p>Published on: <?php echo e($article->created_at->format('M d, Y')); ?></p>
+        
+                    <!-- Display existing picture if available -->
+                    <?php if($article->picture): ?>
+                        <img src="<?php echo e(asset('storage/' . $article->picture)); ?>" alt="Article Picture" class="article-image">
+                    <?php endif; ?>
+        
+                    <form method="POST" action="<?php echo e(route('profile.articles.update', $article->id)); ?>" enctype="multipart/form-data">
+                        <?php echo csrf_field(); ?>
+                        <label>Title</label>
+                        <input type="text" name="title" value="<?php echo e($article->title); ?>" required>
+                    
+                        <label>Article Link</label>
+                        <input type="url" name="link" value="<?php echo e($article->link); ?>" required>
+                    
+                        <label>Picture</label>
+                        <input type="file" name="picture" accept="image/*">
+        
+                        <button type="submit">Update Article</button>
+                    </form>
+                </li>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        </ul>
+        
         <?php endif; ?>
     </div>
 <?php $__env->stopSection(); ?>

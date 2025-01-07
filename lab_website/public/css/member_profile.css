@@ -1,0 +1,132 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Body Styling */
+body {
+    background: linear-gradient(135deg, #0B192C, #112240);
+    color: #D1E8FF;
+    overflow-x: hidden;
+}
+
+/* Profile Page Header */
+h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin: 3rem 0;
+    color: #64FFDA;
+    text-shadow: 0 0 15px rgba(100, 255, 218, 0.5);
+}
+
+/* Profile Section Styling */
+.user-profile {
+    max-width: 1000px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background: #112240;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+/* Profile Info Styling */
+.profile-info {
+    flex: 1;
+    min-width: 250px;
+    background: #1C2A44;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.profile-info:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+}
+
+.profile-info img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+}
+
+.profile-info p {
+    color: #B0C4DE;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+/* User Articles Styling */
+.user-articles {
+    flex: 2;
+    min-width: 250px;
+    background: #1C2A44;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.user-articles h3 {
+    color: #64FFDA;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+.user-articles ul {
+    list-style: none;
+    padding: 0;
+}
+
+.user-articles li {
+    background: #112240;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    transition: background 0.3s;
+}
+
+.user-articles li:hover {
+    background: #1C2A44;
+}
+
+.user-articles li a {
+    color: #64FFDA;
+    text-decoration: none;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 0.5rem;
+    transition: color 0.3s;
+}
+
+.user-articles li a:hover {
+    color: #3E92CC;
+}
+
+.user-articles li p {
+    color: #B0C4DE;
+    font-size: 0.9rem;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .user-profile {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profile-info, .user-articles {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+}

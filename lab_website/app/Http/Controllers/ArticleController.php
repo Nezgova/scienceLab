@@ -8,43 +8,60 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Specialty;
+use App\Models\Group;
+
 
 class ArticleController extends Controller
 {
     // Display articles, specialties, and the form to submit a new one
     public function about(Request $request)
-    {
-        $search = $request->input('search');
-    
-        $articles = Article::with(['author', 'userVotes']) // Use 'userVotes' instead of 'votes'
-            ->when($search, fn($query) => $query->where('title', 'like', "%$search%"))
-            ->orderByDesc('created_at')
-            ->paginate(10);
-    
-        $specialties = Specialty::all();
-        $user = Auth::user();
-    
-        return view('about', compact('articles', 'specialties', 'user'));
-    }
+{
+    $search = $request->input('search');
+    $groupId = $request->input('group'); // Get the selected group ID
+
+    $articles = Article::with(['author', 'userVotes'])
+        ->when($search, fn($query) => $query->where('title', 'like', "%$search%"))
+        ->when($groupId, function ($query) use ($groupId) {
+            $query->whereHas('author', function ($query) use ($groupId) {
+                $query->where('group_id', $groupId); // Filter by the author's group
+            });
+        })
+        ->orderByDesc('created_at')
+        ->paginate(10);
+
+    $groups = Group::all(); // Fetch all groups for the filter
+
+    return view('about', compact('articles', 'groups'));
+}
+
     
 
     // Store a new article
     public function store(Request $request)
-    {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'link' => 'required|url',
-        ]);
+{
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'link' => 'required|url',
+        'picture' => 'nullable|image|max:2048', // Validate the image
+    ]);
 
-        // Create a new article with the authenticated user as the author
-        Article::create([
-            'title' => $request->title,
-            'link' => $request->link,
-            'author_id' => Auth::id(),
-        ]);
-
-        return Redirect::back()->with('message', 'Article submitted successfully!');
+    // Handle picture upload
+    $picturePath = null;
+    if ($request->hasFile('picture')) {
+        $picturePath = $request->file('picture')->store('pictures', 'public');
     }
+
+    // Create a new article
+    Article::create([
+        'title' => $request->title,
+        'link' => $request->link,
+        'author_id' => Auth::id(),
+        'picture' => $picturePath,
+    ]);
+
+    return Redirect::back()->with('message', 'Article submitted successfully!');
+}
+
 
     // Update an article
     public function update(Request $request, $id)

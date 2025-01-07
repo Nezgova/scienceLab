@@ -134,3 +134,18 @@ form button:hover {
     transform: translateY(-3px);
     box-shadow: 0 0 15px rgba(82, 230, 198, 0.7);
 }
+
+.article-image {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.article-image:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.8);
+}

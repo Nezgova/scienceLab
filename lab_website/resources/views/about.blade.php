@@ -8,16 +8,27 @@
     <h1>About Us</h1>
     <p>Welcome to the Lab Portal! This is a platform where PhD students and researchers can share and explore research articles.</p>
 
-    <!-- Search Bar -->
+    <!-- Search and Filter Bar -->
     <form method="GET" action="{{ route('about') }}" class="search-form">
         <input type="text" name="search" placeholder="Search articles..." value="{{ request('search') }}">
+        
+        <!-- Group Filter -->
+        <select name="group">
+            <option value="">All Groups</option>
+            @foreach($groups as $group)
+                <option value="{{ $group->id }}" {{ request('group') == $group->id ? 'selected' : '' }}>
+                    {{ $group->name }}
+                </option>
+            @endforeach
+        </select>
+
         <button type="submit">Search</button>
     </form>
 
     <!-- Post New Article Form -->
     <div class="post-article-form">
         <h2>Post a New Article</h2>
-        <form method="POST" action="{{ route('about') }}">
+        <form method="POST" action="{{ route('about') }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="title">Title</label>
@@ -26,6 +37,10 @@
             <div class="form-group">
                 <label for="link">Link</label>
                 <input type="url" name="link" required>
+            </div>
+            <div class="form-group">
+                <label for="picture">Picture</label>
+                <input type="file" name="picture" accept="image/*">
             </div>
             <button type="submit">Post Article</button>
         </form>
@@ -38,28 +53,26 @@
             @if($articles->count())
                 @foreach($articles as $article)
                     <div class="article">
+                        @if($article->picture)
+                            <img src="{{ asset('storage/' . $article->picture) }}" alt="Article Picture">
+                        @endif
                         <h3>{{ $article->title }}</h3>
                         <p>Posted by {{ $article->author->username }} on {{ $article->created_at->format('F j, Y') }}</p>
                         <a href="{{ $article->link }}" target="_blank">Read Article</a>
                         
                         <!-- Voting System -->
                         <div class="vote-container">
-                            <!-- Upvote Button -->
                             <form action="{{ route('articles.upvote', $article->id) }}" method="POST" class="vote-form" data-id="{{ $article->id }}">
                                 @csrf
-                                <button type="submit" class="vote-btn upvote-btn" data-vote="upvote">Upvote</button>
+                                <button type="submit" class="vote-btn upvote-btn {{ $article->userVote(auth()->id())?->vote === 1 ? 'active-vote' : '' }}">Upvote</button>
                             </form>
-                        
-                            <!-- Downvote Button -->
                             <form action="{{ route('articles.downvote', $article->id) }}" method="POST" class="vote-form" data-id="{{ $article->id }}">
                                 @csrf
-                                <button type="submit" class="vote-btn downvote-btn" data-vote="downvote">Downvote</button>
+                                <button type="submit" class="vote-btn downvote-btn {{ $article->userVote(auth()->id())?->vote === -1 ? 'active-vote' : '' }}">Downvote</button>
                             </form>
                         </div>
-                        
-                        <!-- Vote Count -->
                         <p class="vote-count" data-id="{{ $article->id }}">
-                            Votes: {{ $article->userVotes instanceof Illuminate\Database\Eloquent\Collection ? $article->userVotes->sum('vote') : 0 }}
+                            Votes: {{ $article->userVotes->sum('vote') }}
                         </p>
                     </div>
                 @endforeach
@@ -77,52 +90,41 @@
 
 @section('scripts')
 <script>
-    console.log("AJAX voting script loaded");
-
     document.addEventListener("DOMContentLoaded", () => {
-        // Prevent the default form submission first
         const voteForms = document.querySelectorAll(".vote-form");
+
         voteForms.forEach(form => {
-            form.addEventListener("submit", function(e) {
-                e.preventDefault();  // This must be called first
-    console.log("Form submission intercepted for form:", form);
+            form.addEventListener("submit", async (e) => {
+                e.preventDefault();
+
                 const formData = new FormData(form);
                 const url = form.action;
-                const articleId = form.getAttribute("data-id");
+                const articleId = form.dataset.id;
                 const voteCountElement = document.querySelector(`.vote-count[data-id="${articleId}"]`);
+                const container = form.closest(".vote-container");
+                const upvoteBtn = container.querySelector(".upvote-btn");
+                const downvoteBtn = container.querySelector(".downvote-btn");
 
-                fetch(url, {
-                    method: "POST",
-                    body: formData,
-                    headers: {
-                        "X-Requested-With": "XMLHttpRequest"
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
+                try {
+                    const response = await fetch(url, {
+                        method: "POST",
+                        body: formData,
+                        headers: {
+                            "X-Requested-With": "XMLHttpRequest"
+                        }
+                    });
+                    const data = await response.json();
+
                     // Update vote count
                     voteCountElement.textContent = `Votes: ${data.totalVotes}`;
 
                     // Update button states
-                    const container = form.closest(".vote-container");
-                    const upvoteBtn = container.querySelector(".upvote-btn");
-                    const downvoteBtn = container.querySelector(".downvote-btn");
-
-                    upvoteBtn.classList.remove("active-vote");
-                    downvoteBtn.classList.remove("active-vote");
-
-                    if (data.userVote === 1) {
-                        upvoteBtn.classList.add("active-vote");
-                    } else if (data.userVote === -1) {
-                        downvoteBtn.classList.add("active-vote");
-                    }
-                })
-                .catch(error => {
+                    upvoteBtn.classList.toggle("active-vote", data.userVote === 1);
+                    downvoteBtn.classList.toggle("active-vote", data.userVote === -1);
+                } catch (error) {
                     console.error("Vote submission failed:", error);
                     alert("An error occurred while processing your vote.");
-                });
-
-                return false; // Extra prevention of form submission
+                }
             });
         });
     });

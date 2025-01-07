@@ -3,15 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Group;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        // Get all users
         $users = User::all();
-        return response()->json($users);
+
+        // Get all groups
+        $groups = Group::all();
+
+        // If there's a group filter, filter users by group
+        if ($request->has('group') && $request->group != '') {
+            $users = $users->where('group_id', $request->group);
+        }
+
+        // Return to members.blade.php with users and groups
+        return view('members', compact('users', 'groups'));
     }
 
     public function store(Request $request)
@@ -36,8 +47,8 @@ class UserController extends Controller
 
     public function show($id)
     {
-        $user = User::findOrFail($id);
-        return response()->json($user);
+        $user = User::with('articles')->findOrFail($id); // Get the user and their articles
+        return view('memberProfile', compact('user')); // Return to memberProfile.blade.php
     }
 
     public function update(Request $request, $id)
@@ -70,3 +81,4 @@ class UserController extends Controller
         return response()->json(['message' => 'User deleted successfully']);
     }
 }
+

@@ -24,6 +24,8 @@
 
         <!-- Scripts Section -->
         <script src="{{ asset('js/app.js') }}" defer></script> <!-- Default JS -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
         @yield('scripts') <!-- JavaScript from child views will load here -->
     </body>
 </html>

@@ -43,6 +43,8 @@
 
         <!-- Scripts Section -->
         <script src="<?php echo e(asset('js/app.js')); ?>" defer></script> <!-- Default JS -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
         <?php echo $__env->yieldContent('scripts'); ?> <!-- JavaScript from child views will load here -->
     </body>
 </html>

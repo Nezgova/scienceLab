@@ -1,0 +1,226 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Body Styling */
+body {
+    background: linear-gradient(135deg, #0B192C, #112240);
+    color: #D1E8FF;
+    overflow-x: hidden;
+}
+
+/* Admin Dashboard Header */
+h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin: 2rem 0;
+    color: #64FFDA;
+    text-shadow: 0 0 15px rgba(100, 255, 218, 0.5);
+}
+
+/* Section Styling */
+.user-section, .article-section, .statistics-section {
+    margin: 2rem auto;
+    max-width: 90%;
+    background: #112240;
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.user-section h2, .article-section h2, .statistics-section h2 {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: #64FFDA;
+    text-transform: uppercase;
+    text-shadow: 0 0 10px rgba(100, 255, 218, 0.5);
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-size: 1rem;
+}
+
+thead {
+    background: #0B192C;
+    color: #64FFDA;
+    text-transform: uppercase;
+}
+
+th, td {
+    padding: 1rem;
+    border: 1px solid #1C2A44;
+    text-align: left;
+}
+
+tbody tr:nth-child(odd) {
+    background: #1C2A44;
+}
+
+tbody tr:nth-child(even) {
+    background: #0B192C;
+}
+
+tbody tr:hover {
+    background: #112240;
+    color: #64FFDA;
+    transition: background 0.3s, color 0.3s;
+}
+
+a {
+    color: #3E92CC;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #64FFDA;
+    text-decoration: underline;
+}
+
+/* Button Styling */
+button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+}
+
+/* Update Button */
+button.update {
+    background: linear-gradient(135deg, #3E92CC, #64FFDA);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+}
+
+button.update:hover {
+    background: linear-gradient(135deg, #64FFDA, #3E92CC);
+    transform: scale(1.05);
+    box-shadow: 0 0 10px #64FFDA;
+}
+
+button.update:active {
+    background: #3E92CC;
+}
+
+/* Delete Button */
+button.delete {
+    background: linear-gradient(135deg, #ff1900, #6b0d03);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+}
+
+button.delete:hover {
+    background: linear-gradient(135deg, #720b00, #fd1c03);
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(255, 25, 0, 0.7);
+}
+
+button.delete:active {
+    background: #6b0d03;
+}
+
+/* Make Admin Button */
+button.make-admin {
+    background: linear-gradient(135deg, #64FFDA, #3E92CC);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+}
+
+button.make-admin:hover {
+    background: linear-gradient(135deg, #3E92CC, #64FFDA);
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(10, 239, 255, 0.7);
+}
+
+button.make-admin:active {
+    background: #0ff5d6;
+}
+
+/* Statistics Section */
+.statistics-section canvas {
+    max-width: 100%;
+    margin: 2rem auto;
+    display: block;
+    background: #1C2A44;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    table {
+        font-size: 0.9rem;
+    }
+
+    th, td {
+        padding: 0.8rem;
+    }
+
+    button {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
+    }
+}
+.hidden {
+    display: none;
+}
+
+canvas {
+    width: 800px !important;
+    height: 400px !important; /* Adjust as needed */
+    display: block;
+    margin: 0 auto;
+}
+
+.section-tabs {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.section-tab {
+    margin: 0 0.5rem;
+    padding: 0.5rem 1rem;
+    background: #64FFDA;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #0B192C;
+    font-size: 1rem;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.section-tab:hover {
+    background: #3E92CC;
+    color: #ffffff;
+    transform: scale(1.05);
+}
+
+.section-content.hidden {
+    display: none;
+}

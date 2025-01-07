@@ -1,0 +1,130 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Body Styling */
+body {
+    background: linear-gradient(135deg, #0B192C, #112240);
+    color: #D1E8FF;
+    overflow-x: hidden;
+}
+
+/* Members Page Header */
+h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin: 3rem 0;
+    color: #64FFDA;
+    text-shadow: 0 0 15px rgba(100, 255, 218, 0.5);
+}
+
+/* Search Bar and Group Filter */
+.search-and-filter {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.search-bar input,
+.group-filter select {
+    padding: 0.8rem 1.2rem;
+    border-radius: 25px;
+    border: 2px solid #64FFDA;
+    background-color: transparent;
+    color: #D1E8FF;
+    font-size: 1.1rem;
+    width: 200px; /* default width */
+    transition: all 0.3s ease;
+}
+
+/* Hover and Focus Effects for Inputs */
+.search-bar input:hover,
+.group-filter select:hover,
+.search-bar input:focus,
+.group-filter select:focus {
+    border-color: #3E92CC;
+    outline: none;
+}
+
+/* Members List Styling */
+.members-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+/* Member Card Styling */
+.member-card {
+    width: 250px;
+    background: #112240;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    color: #D1E8FF;
+    cursor: pointer;
+    text-decoration: none;
+    position: relative;
+}
+
+/* Hover Effects for Member Cards */
+.member-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* Avatar Image Styling */
+.member-card .avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+    border: 2px solid #64FFDA;
+    transition: transform 0.3s ease;
+}
+
+/* Hover Effect for Avatar Image */
+.member-card:hover .avatar {
+    transform: scale(1.1);
+}
+
+/* Member Info Styling */
+.member-card h3 {
+    font-size: 1.5rem;
+    color: #64FFDA;
+    margin-bottom: 0.5rem;
+}
+
+.member-card p {
+    font-size: 1rem;
+    color: #B0C4DE;
+    margin-bottom: 1rem;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .members-list {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .search-bar input,
+    .group-filter select {
+        width: 80%;
+    }
+
+    .member-card {
+        width: 90%;
+        margin-bottom: 1.5rem;
+    }
+}

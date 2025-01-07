@@ -90,13 +90,15 @@ p {
 .search-form {
     display: flex;
     justify-content: center;
+    align-items: center;
     margin: 2rem auto;
     width: 100%;
-    max-width: 600px;
+    max-width: 800px; /* Increased to accommodate the dropdown */
+    gap: 10px; /* Add spacing between elements */
 }
 
 .search-form input[type="text"] {
-    flex: 1;
+    flex: 2;
     padding: 1rem;
     border: 2px solid #3E92CC;
     border-right: none;
@@ -117,12 +119,29 @@ p {
     outline: none;
 }
 
+.search-form select {
+    flex: 1;
+    padding: 1rem;
+    border: 2px solid #3E92CC;
+    border-radius: 8px;
+    background-color: #1C2A44;
+    color: white;
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.search-form select:focus {
+    border-color: #64FFDA;
+    box-shadow: 0 0 8px #64FFDA;
+    outline: none;
+}
+
 .search-form button {
     padding: 0.9rem 1.5rem;
     background: linear-gradient(135deg, #3E92CC, #64FFDA);
     color: white;
     border: none;
-    border-radius: 0 8px 8px 0;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 1rem;
     transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
@@ -133,6 +152,7 @@ p {
     transform: scale(1.05);
     box-shadow: 0 0 10px #64FFDA;
 }
+
 
 /* Post Article Form Styling */
 .post-article-form {
@@ -292,4 +312,46 @@ p {
     background: #64FFDA;
     color: #112240;
     box-shadow: 0 0 8px #64FFDA;
+}
+
+/* Picture Input Styling */
+.post-article-form input[type="file"] {
+    width: 80%;
+    margin: 0.5rem auto;
+    padding: 0.8rem;
+    border: 2px dashed #3E92CC;
+    border-radius: 8px;
+    background: #1C2A44;
+    color: #B0C4DE;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: border-color 0.3s, background 0.3s;
+}
+
+.post-article-form input[type="file"]:hover {
+    border-color: #64FFDA;
+    background: #112240;
+}
+
+.post-article-form input[type="file"]:focus {
+    outline: none;
+    border-color: #64FFDA;
+    background: #112240;
+    box-shadow: 0 0 8px #64FFDA;
+}
+
+/* Picture Display in Article Cards */
+.article img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.article img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.8);
 }

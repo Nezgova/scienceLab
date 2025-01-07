@@ -8,22 +8,25 @@ use App\Models\Article;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Group;
+
 
 class UserProfileController extends Controller
 {
     public function index()
-    {
-        $user = Auth::user();
+{
+    $user = Auth::user();
+    $groups = Group::all(); // Fetch all groups
 
-        // Ensure fields are arrays or valid JSON
-        $user->interests = $user->interests ? json_decode($user->interests, true) : [];
-        $user->specialties = $user->specialties ? json_decode($user->specialties, true) : [];
+    // Ensure fields are arrays or valid JSON
+    $user->interests = $user->interests ? json_decode($user->interests, true) : [];
+    $user->specialties = $user->specialties ? json_decode($user->specialties, true) : [];
 
-        // Update query to use 'author_id' instead of 'user_id'
-        $articles = Article::where('author_id', $user->id)->get();
+    $articles = Article::where('author_id', $user->id)->get();
 
-        return view('profile', compact('user', 'articles'));
-    }
+    return view('profile', compact('user', 'articles', 'groups'));
+}
+
 
     public function updateProfile(Request $request)
 {
@@ -38,6 +41,7 @@ class UserProfileController extends Controller
         'specialties' => 'nullable|array',
         'sex' => 'nullable|string',
         'description' => 'nullable|string|max:500',
+        'group_id' => 'nullable|exists:groups,id',
     ]);
 
     // Update the user's email
@@ -67,6 +71,7 @@ class UserProfileController extends Controller
     $user->specialties = json_encode($request->specialties);
     $user->sex = $request->sex;
     $user->description = $request->description;
+    $user->group_id = $request->group_id;
 
     // Save the updated user details
     $user->save();
@@ -84,19 +89,42 @@ class UserProfileController extends Controller
     }
 
     public function updateArticle(Request $request, $id)
-    {
-        $article = Article::findOrFail($id);
-    
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'link' => 'required|url', // Ensure it's a valid URL
-        ]);
-    
-        $article->title = $request->title;
-        $article->link = $request->link; // Use the link field instead of content
-        $article->save();
-    
-        return redirect()->back()->with('success', 'Article updated successfully!');
+{
+    $article = Article::findOrFail($id);
+
+    // Ensure the user owns the article
+    if ($article->author_id !== Auth::id()) {
+        return redirect()->back()->with('error', 'You are not authorized to edit this article.');
     }
+
+    // Validate the input
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'link' => 'required|url',
+        'picture' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Validate the uploaded image
+    ]);
+
+    // Update article fields
+    $article->title = $request->title;
+    $article->link = $request->link;
+
+    // Handle the picture upload
+    if ($request->hasFile('picture')) {
+        // Delete the old picture if it exists
+        if ($article->picture && Storage::disk('public')->exists($article->picture)) {
+            Storage::disk('public')->delete($article->picture);
+        }
+
+        // Store the new picture
+        $path = $request->file('picture')->store('article_pictures', 'public');
+        $article->picture = $path;
+    }
+
+    // Save the updated article
+    $article->save();
+
+    return redirect()->back()->with('success', 'Article updated successfully!');
+}
+
     
 }

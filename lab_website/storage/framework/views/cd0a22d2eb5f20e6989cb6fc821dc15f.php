@@ -15,6 +15,9 @@
             <img src="<?php echo e(asset('storage/' . $user->profile_picture)); ?>" alt="<?php echo e($user->name); ?>" class="avatar">
             <p>Email: <?php echo e($user->email); ?></p>
             <p>Bio: <?php echo e($user->description ?? 'No bio available.'); ?></p>
+            <p>Total Vote Count: <?php echo e($user->articles->sum(function ($article) {
+                return $article->upvotes()->count() - $article->downvotes()->count();
+            })); ?></p> <!-- Total vote count -->
         </div>
 
         <!-- User Articles -->
@@ -23,9 +26,15 @@
             <?php if($user->articles->count() > 0): ?>
                 <ul>
                     <?php $__currentLoopData = $user->articles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $article): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <li>
-                            <a href="<?php echo e($article->link); ?>" target="_blank"><?php echo e($article->title); ?></a>
-                            <p>Posted on: <?php echo e($article->created_at->format('F j, Y')); ?></p>
+                        <li class="article-item">
+                            <div class="article-card" 
+                                 style="background-image: url('<?php echo e(asset('storage/' . $article->picture)); ?>');">
+                                <div class="overlay">
+                                    <a href="<?php echo e($article->link); ?>" target="_blank"><?php echo e($article->title); ?></a>
+                                    <p>Posted on: <?php echo e($article->created_at->format('F j, Y')); ?></p>
+                                    <p>Vote Count: <?php echo e($article->upvotes()->count() - $article->downvotes()->count()); ?></p>
+                                </div>
+                            </div>
                         </li>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </ul>

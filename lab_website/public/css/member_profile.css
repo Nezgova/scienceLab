@@ -6,54 +6,32 @@
     font-family: 'Arial', sans-serif;
 }
 
-/* Body Styling */
-body {
-    background: linear-gradient(135deg, #0B192C, #112240);
+/* Profile Page Styling */
+.user-profile {
+    max-width: 1200px;
+    margin: 2rem auto;
     color: #D1E8FF;
-    overflow-x: hidden;
 }
 
-/* Profile Page Header */
 h1 {
     text-align: center;
     font-size: 2.5rem;
-    margin: 3rem 0;
+    margin: 2rem 0;
     color: #64FFDA;
     text-shadow: 0 0 15px rgba(100, 255, 218, 0.5);
 }
 
-/* Profile Section Styling */
-.user-profile {
-    max-width: 1000px;
-    margin: 3rem auto;
-    padding: 2rem;
-    background: #112240;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: space-between;
-    gap: 2rem;
-    flex-wrap: wrap;
-}
-
 /* Profile Info Styling */
 .profile-info {
-    flex: 1;
-    min-width: 250px;
-    background: #1C2A44;
-    padding: 1.5rem;
+    text-align: center;
+    background-color: #112240;
+    padding: 2rem;
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    text-align: center;
-    transition: transform 0.3s, box-shadow 0.3s;
+    margin-bottom: 2rem;
 }
 
-.profile-info:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
-}
-
-.profile-info img {
+.profile-info .avatar {
     width: 150px;
     height: 150px;
     border-radius: 50%;
@@ -62,71 +40,136 @@ h1 {
 }
 
 .profile-info p {
+    font-size: 1.2rem;
     color: #B0C4DE;
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
+    margin: 0.5rem 0;
 }
 
-/* User Articles Styling */
+.profile-info h3 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #64FFDA;
+}
+
+/* Articles Section */
 .user-articles {
-    flex: 2;
-    min-width: 250px;
-    background: #1C2A44;
-    padding: 1.5rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    margin-top: 2rem;
 }
 
 .user-articles h3 {
-    color: #64FFDA;
+    text-align: center;
     font-size: 1.8rem;
-    margin-bottom: 1rem;
+    color: #64FFDA;
+    margin-bottom: 1.5rem;
 }
 
-.user-articles ul {
-    list-style: none;
-    padding: 0;
+/* Article Card Styling */
+.article-item {
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: center;
 }
 
-.user-articles li {
-    background: #112240;
-    padding: 1rem;
+.article-card {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    height: 350px;
+    background-color: #112240;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    color: #D1E8FF;
+    text-align: center;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Background image styling with permanent blur */
+.article-card {
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.article-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: inherit;
+    background-size: cover;
+    background-position: center;
+    filter: blur(8px);
+    z-index: 0;
+}
+
+/* Overlay for text */
+.article-card .overlay {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding: 20px;
+    background-color: rgba(17, 34, 64, 0.7); /* Semi-transparent background */
     border-radius: 8px;
-    margin-bottom: 1rem;
-    transition: background 0.3s;
 }
 
-.user-articles li:hover {
-    background: #1C2A44;
-}
-
-.user-articles li a {
+/* Article Title */
+.article-card a {
+    font-size: 1.3rem;
+    font-weight: bold;
     color: #64FFDA;
     text-decoration: none;
-    font-weight: bold;
-    display: block;
     margin-bottom: 0.5rem;
-    transition: color 0.3s;
+    display: block;
+    text-shadow: 0px 0px 5px rgba(100, 255, 218, 0.8);
 }
 
-.user-articles li a:hover {
-    color: #3E92CC;
-}
-
-.user-articles li p {
+/* Post Date */
+.article-card p {
+    font-size: 1rem;
     color: #B0C4DE;
-    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 0px 0px 5px rgba(100, 255, 218, 0.8);
+}
+
+/* Hover Effect */
+.article-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* For Articles Without Image */
+.article-card.no-image {
+    background-color: #1C2A44;
+}
+
+.article-card.no-image::before {
+    display: none;
 }
 
 /* Responsive Design */
 @media screen and (max-width: 768px) {
-    .user-profile {
+    .article-item {
         flex-direction: column;
         align-items: center;
     }
 
-    .profile-info, .user-articles {
-        width: 100%;
-        margin-bottom: 1rem;
+    .article-card {
+        width: 90%;
+        margin-bottom: 1.5rem;
+        height: 300px;
+    }
+
+    /* Profile Info */
+    .profile-info {
+        width: 90%;
+        margin: 0 auto;
+        padding: 1.5rem;
     }
 }

@@ -32,17 +32,35 @@ class AdminController extends Controller
     }
 
     public function updateUser(Request $request, $id)
-    {
-        $user = User::findOrFail($id);
+{
+    $user = User::findOrFail($id);
 
-        // Ensure the 'name', 'email', and 'group_id' fields are being passed
-        $data = $request->only(['name', 'email', 'group_id']);
-        
-        // Update the user
-        $user->update($data);
+    // Ensure the 'name', 'email', 'group_id', and 'password' fields are being passed
+    $data = $request->only(['name', 'email', 'group_id', 'password']);
 
-        return back()->with('success', 'User updated successfully.');
+    // Validate input
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+        'group_id' => 'nullable|exists:groups,id',
+        'password' => 'nullable|min:8', // Password is optional
+    ]);
+
+    // Update the user fields
+    $user->name = $data['name'];
+    $user->email = $data['email'];
+    $user->group_id = $data['group_id'] ?? null;
+
+    // Update password only if provided
+    if (!empty($data['password'])) {
+        $user->password = bcrypt($data['password']);
     }
+
+    $user->save();
+
+    return back()->with('success', 'User updated successfully.');
+}
+
 
     public function deleteUser($id)
     {

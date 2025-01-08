@@ -38,18 +38,21 @@
                         <button type="button" class="admin-button update" onclick="toggleUserEditForm({{ $user->id }})">Edit</button>
 
                         <!-- Edit Form -->
-                        <form method="POST" action="{{ route('admin.users.update', $user->id) }}" id="user-edit-form-{{ $user->id }}" style="display: none;">
-                            @csrf
-                            <input type="text" name="name" value="{{ $user->name }}" required>
-                            <input type="email" name="email" value="{{ $user->email }}" required>
-                            <select name="group_id">
-                                <option value="">No Group</option>
-                                @foreach($groups as $group)
-                                    <option value="{{ $group->id }}" {{ $user->group_id == $group->id ? 'selected' : '' }}>{{ $group->name }}</option>
-                                @endforeach
-                            </select>
-                            <button type="submit" class="admin-button update">Save</button>
-                        </form>
+<form method="POST" action="{{ route('admin.users.update', $user->id) }}" id="user-edit-form-{{ $user->id }}" style="display: none;">
+    @csrf
+    <input type="text" name="name" value="{{ $user->name }}" required placeholder="Name">
+    <input type="email" name="email" value="{{ $user->email }}" required placeholder="Email">
+    <select name="group_id">
+        <option value="">No Group</option>
+        @foreach($groups as $group)
+            <option value="{{ $group->id }}" {{ $user->group_id == $group->id ? 'selected' : '' }}>{{ $group->name }}</option>
+        @endforeach
+    </select>
+    <!-- New Password Field -->
+    <input type="password" name="password" placeholder="New Password (optional)">
+    <button type="submit" class="admin-button update">Save</button>
+</form>
+
 
                         <!-- Delete Button -->
                         <form method="POST" action="{{ route('admin.users.delete', $user->id) }}" style="display: inline;">

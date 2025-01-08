@@ -38,18 +38,21 @@
                         <button type="button" class="admin-button update" onclick="toggleUserEditForm(<?php echo e($user->id); ?>)">Edit</button>
 
                         <!-- Edit Form -->
-                        <form method="POST" action="<?php echo e(route('admin.users.update', $user->id)); ?>" id="user-edit-form-<?php echo e($user->id); ?>" style="display: none;">
-                            <?php echo csrf_field(); ?>
-                            <input type="text" name="name" value="<?php echo e($user->name); ?>" required>
-                            <input type="email" name="email" value="<?php echo e($user->email); ?>" required>
-                            <select name="group_id">
-                                <option value="">No Group</option>
-                                <?php $__currentLoopData = $groups; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $group): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <option value="<?php echo e($group->id); ?>" <?php echo e($user->group_id == $group->id ? 'selected' : ''); ?>><?php echo e($group->name); ?></option>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            </select>
-                            <button type="submit" class="admin-button update">Save</button>
-                        </form>
+<form method="POST" action="<?php echo e(route('admin.users.update', $user->id)); ?>" id="user-edit-form-<?php echo e($user->id); ?>" style="display: none;">
+    <?php echo csrf_field(); ?>
+    <input type="text" name="name" value="<?php echo e($user->name); ?>" required placeholder="Name">
+    <input type="email" name="email" value="<?php echo e($user->email); ?>" required placeholder="Email">
+    <select name="group_id">
+        <option value="">No Group</option>
+        <?php $__currentLoopData = $groups; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $group): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <option value="<?php echo e($group->id); ?>" <?php echo e($user->group_id == $group->id ? 'selected' : ''); ?>><?php echo e($group->name); ?></option>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+    </select>
+    <!-- New Password Field -->
+    <input type="password" name="password" placeholder="New Password (optional)">
+    <button type="submit" class="admin-button update">Save</button>
+</form>
+
 
                         <!-- Delete Button -->
                         <form method="POST" action="<?php echo e(route('admin.users.delete', $user->id)); ?>" style="display: inline;">

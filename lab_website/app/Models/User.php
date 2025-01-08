@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\Article;
-
+use App\Models\Message;
 class User extends Authenticatable
 {
     protected $fillable = [
@@ -36,5 +36,15 @@ public function group()
 {
     return $this->belongsTo(Group::class);
 }
+public function sentMessages()
+{
+    return $this->hasMany(Message::class, 'sender_id');
+}
+
+public function receivedMessages()
+{
+    return $this->hasMany(Message::class, 'receiver_id');
+}
+
 
 }

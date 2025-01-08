@@ -17,7 +17,15 @@
             <p>Bio: {{ $user->description ?? 'No bio available.' }}</p>
             <p>Total Vote Count: {{ $user->articles->sum(function ($article) {
                 return $article->upvotes()->count() - $article->downvotes()->count();
-            }) }}</p> <!-- Total vote count -->
+            }) }}</p>
+            
+            <!-- Send Message Button -->
+            <form action="{{ route('messages.store') }}" method="POST" class="send-message-form">
+                @csrf
+                <input type="hidden" name="receiver_id" value="{{ $user->id }}">
+                <textarea name="message" rows="3" placeholder="Type your message..." required></textarea>
+                <button type="submit">Send Message</button>
+            </form>
         </div>
 
         <!-- User Articles -->

@@ -17,7 +17,6 @@
             <img src="{{ Auth::user()->profile_picture ? asset('storage/' . Auth::user()->profile_picture) : asset('attachments/default.png') }}" 
                 alt="Profile Picture" 
                 class="profile-pic-large">
-            <input type="file" name="profile_picture" accept="image/*">
         </div>
 
         <!-- Profile Form Fields -->
@@ -57,6 +56,8 @@
 
         <!-- Hidden Edit Form -->
         <div id="edit-form" style="display: none;">
+            <label>Edit Profile Picture</label>
+            <input type="file" name="profile_picture" accept="image/*">
             <label>Edit Email</label>
             <input type="email" name="email" value="{{ Auth::user()->email }}">
 

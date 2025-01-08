@@ -1,28 +1,68 @@
 <nav class="navbar">
     <div class="logo">Lab Portal</div>
-    <ul class="nav-links">
-        <li><a href="<?php echo e(route('home')); ?>">Home</a></li>
-        <li><a href="/about">About</a></li> 
+    
+    <div class="nav-wrapper">
+        <ul class="nav-links">
+            <span class="nav-indicator"></span>
+            
+            <li>
+                <a href="<?php echo e(route('home')); ?>" class="<?php echo e(Request::routeIs('home') ? 'active' : ''); ?>">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+            </li>
+            
+            <li>
+                <a href="/about" class="<?php echo e(Request::is('about') ? 'active' : ''); ?>">
+                    <i class="fas fa-newspaper"></i>
+                    <span>Articles</span>
+                </a>
+                
+            </li>
 
-        <!-- Admin Section - Visible Only to Admins -->
-        <?php if(Auth::user() && Auth::user()->is_admin): ?>
-            <li><a href="<?php echo e(route('admin.index')); ?>">Admin</a></li>
-        <?php endif; ?>
+            <li>
+                <a href="/members" class="<?php echo e(Request::is('members') ? 'active' : ''); ?>">
+                    <i class="fas fa-users"></i>
+                    <span>Members</span>
+                </a>
+            </li>
 
-        <!-- Members Page Link -->
-        <li><a href="/members">Members</a></li>
+            <li>
+                <a href="<?php echo e(route('messages.index')); ?>" class="<?php echo e(Request::routeIs('messages.index') ? 'active' : ''); ?>">
+                    <i class="fas fa-envelope"></i>
+                    <span>Messages</span>
+                </a>
+            </li>
+        </ul>
 
-        <li><a href="/profile">Profile</a></li>
-
-        <li class="logout">
-            <!-- Logout Form -->
-            <form action="<?php echo e(route('logout')); ?>" method="POST" style="display: inline;">
-                <?php echo csrf_field(); ?>
-                <button type="submit" title="Logout (<?php echo e(explode('@', Auth::user()->email)[0]); ?>)" class="navbar-avatar">
-                    <img src="<?php echo e(Auth::user()->profile_picture ? asset('storage/' . Auth::user()->profile_picture) : asset('attachments/default.png')); ?>" alt="Profile Picture" class="avatar-pic">
+        <div class="nav-right">
+            <div class="profile-dropdown">
+                <button class="profile-btn" title="Profile Menu">
+                    <img 
+                        src="<?php echo e(Auth::user()->profile_picture ? asset('storage/' . Auth::user()->profile_picture) : asset('images/default-avatar.png')); ?>" 
+                        alt="Profile"
+                    >
                 </button>
-            </form>
-        </li>
-    </ul>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="/profile"><i class="fas fa-user"></i> Profile</a>
+                    </li>
+                    <?php if(Auth::user() && Auth::user()->is_admin): ?>
+                        <li>
+                            <a href="<?php echo e(route('admin.index')); ?>"><i class="fas fa-cogs"></i> Admin</a>
+                        </li>
+                    <?php endif; ?>
+                    <li>
+                        <form action="<?php echo e(route('logout')); ?>" method="POST">
+                            <?php echo csrf_field(); ?>
+                            <button type="submit">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
 </nav>
 <?php /**PATH C:\xampp\htdocs\scienceLab\lab_website\resources\views/components/navbar.blade.php ENDPATH**/ ?>

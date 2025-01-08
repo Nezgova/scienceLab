@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+   
+
     <div class="image-container">
         <img src="{{ asset('images/lab-image.png') }}" alt="Lab Image">
     </div>

@@ -1,6 +1,8 @@
 
 
 <?php $__env->startSection('content'); ?>
+   
+
     <div class="image-container">
         <img src="<?php echo e(asset('images/lab-image.png')); ?>" alt="Lab Image">
     </div>

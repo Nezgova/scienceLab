@@ -173,3 +173,31 @@ h1 {
         padding: 1.5rem;
     }
 }
+.send-message-form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.send-message-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: none;
+}
+
+.send-message-form button {
+    background-color: #64ffda;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.send-message-form button:hover {
+    background-color: #3e92cc;
+}

@@ -17,7 +17,15 @@
             <p>Bio: <?php echo e($user->description ?? 'No bio available.'); ?></p>
             <p>Total Vote Count: <?php echo e($user->articles->sum(function ($article) {
                 return $article->upvotes()->count() - $article->downvotes()->count();
-            })); ?></p> <!-- Total vote count -->
+            })); ?></p>
+            
+            <!-- Send Message Button -->
+            <form action="<?php echo e(route('messages.store')); ?>" method="POST" class="send-message-form">
+                <?php echo csrf_field(); ?>
+                <input type="hidden" name="receiver_id" value="<?php echo e($user->id); ?>">
+                <textarea name="message" rows="3" placeholder="Type your message..." required></textarea>
+                <button type="submit">Send Message</button>
+            </form>
         </div>
 
         <!-- User Articles -->

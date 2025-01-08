@@ -10,6 +10,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\MessageController;
+
 
 
 // Redirect / to the login page
@@ -71,3 +73,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
 // Members Page Routes
 Route::get('/members', [UserController::class, 'index'])->name('members.index');
 Route::get('/members/{id}', [UserController::class, 'show'])->name('members.show');
+
+
+//Messages
+Route::middleware('auth')->group(function () {
+    Route::get('/messages', [MessageController::class, 'chatList'])->name('messages.index');
+    Route::get('/messages/{receiver}', [MessageController::class, 'index'])->name('messages.chat');
+    Route::post('/messages', [MessageController::class, 'store'])->name('messages.store');
+});

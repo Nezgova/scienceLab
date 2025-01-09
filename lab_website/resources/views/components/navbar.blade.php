@@ -17,7 +17,13 @@
                     <i class="fas fa-newspaper"></i>
                     <span>Articles</span>
                 </a>
-                
+            </li>
+
+            <li>
+                <a href="{{ route('news') }}" class="{{ Request::routeIs('news') ? 'active' : '' }}">
+                    <i class="fas fa-bullhorn"></i>
+                    <span>News</span>
+                </a>
             </li>
 
             <li>
@@ -63,5 +69,4 @@
                 </ul>
             </div>
         </div>
-        
 </nav>

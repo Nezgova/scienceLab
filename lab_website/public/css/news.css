@@ -1,0 +1,221 @@
+/* Base styles */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Search Form */
+.search-form {
+    margin-bottom: 2rem;
+    display: flex;
+    gap: 1rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.search-form input {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+}
+
+.search-form button {
+    padding: 0.9rem 1.5rem;
+    background: linear-gradient(135deg, #3E92CC, #64FFDA);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+}
+.search-form button:hover {
+    background: linear-gradient(135deg, #64FFDA, #3E92CC);
+    transform: scale(1.05);
+    box-shadow: 0 0 10px #64FFDA;
+}
+
+/* Articles Grid */
+.articles-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Exactly 3 cards per row */
+    gap: 2rem; /* Consistent spacing */
+    margin-bottom: 3rem;
+    justify-content: center; /* Center the grid horizontally */
+    align-items: start; /* Align items at the top */
+}
+
+.article {
+    background: #1C2A44;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Ensure consistent button position */
+    height: 500px;
+    width:500px ;
+    
+}
+
+.article:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.8);
+}
+
+.article img {
+    width: 100%;
+    height: 200px; /* Fixed height for all images */
+    object-fit: cover; /* Ensures images maintain aspect ratio while covering the area */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Optional separator */
+}
+
+.article h3 {
+    padding: 1rem;
+    margin: 0;
+    font-size: 1.2rem;
+    color: #64FFDA;
+}
+
+.article p {
+    padding: 0 1rem;
+    margin: 0.5rem 0;
+    color: #B0C4DE;
+    flex-grow: 1; /* Fills remaining space between content and button */
+}
+
+.article a {
+    display: inline-block;
+    margin: 1rem;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, #3E92CC, #64FFDA);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+    text-align: center;
+}
+
+.article a:hover {
+    background: linear-gradient(135deg, #64FFDA, #3E92CC);
+    transform: scale(1.05);
+    box-shadow: 0 0 10px #64FFDA;
+}
+
+
+/* Laravel Pagination Styles */
+.w-5 {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+nav[role="navigation"] {
+    margin-top: 2rem;
+}
+
+nav[role="navigation"] > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 0.75rem; /* Adjusted spacing for better aesthetics */
+}
+
+.pagination li {
+    display: flex;
+}
+
+.pagination li span,
+.pagination li a {
+    padding: 0.6rem 1.2rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    color: #4a5568;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s, color 0.3s, transform 0.2s;
+}
+
+.pagination li.active span {
+    background-color: #2563eb; /* A more vibrant blue */
+    border-color: #2563eb;
+    color: white;
+    font-weight: bold;
+    transform: scale(1.05); /* Slightly emphasize active page */
+}
+
+.pagination li a:hover {
+    background-color: #edf2f7; /* Light hover effect */
+    border-color: #cbd5e0; /* Subtle border color change */
+    color: #2d3748;
+    transform: scale(1.05); /* Add hover emphasis */
+}
+
+.pagination li.disabled span {
+    background-color: #f7fafc;
+    color: #a0aec0;
+    cursor: not-allowed;
+    border-color: #e2e8f0;
+}
+
+/* SVG Icon Adjustments */
+.pagination svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    fill: #4a5568; /* Match text color */
+    transition: fill 0.3s;
+}
+
+.pagination li a:hover svg {
+    fill: #2563eb; /* Highlight SVG on hover */
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+    
+    .search-form {
+        flex-direction: column;
+    }
+    
+    .search-form button {
+        width: 100%;
+    }
+    
+    .articles-list {
+        grid-template-columns: 1fr;
+    }
+    
+    .pagination {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+/* Error Message Styling */
+.error-message {
+    text-align: center;
+    color: #e53e3e;
+    padding: 1rem;
+    margin: 1rem 0;
+    background-color: #fff5f5;
+    border-radius: 0.5rem;
+    border: 1px solid #feb2b2;
+}

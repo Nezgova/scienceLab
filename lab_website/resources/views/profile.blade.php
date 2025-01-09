@@ -21,7 +21,6 @@
 
         <!-- Profile Form Fields -->
         <div class="profile-details">
-            <!-- Profile Information -->
             <div class="detail-item">
                 <label>Email:</label>
                 <p>{{ Auth::user()->email }}</p>
@@ -52,12 +51,11 @@
             </div>
         </div>
 
-        <button type="button" class="edit-button" onclick="toggleEditForm()">Edit Profile</button>
-
         <!-- Hidden Edit Form -->
-        <div id="edit-form" style="display: none;">
+        <div id="edit-form" style="display: none; margin-top: 20px;">
             <label>Edit Profile Picture</label>
             <input type="file" name="profile_picture" accept="image/*">
+
             <label>Edit Email</label>
             <input type="email" name="email" value="{{ Auth::user()->email }}">
 
@@ -105,13 +103,18 @@
 
             <button type="submit">Save Changes</button>
         </div>
-    </form>
 
-    <form method="POST" action="{{ route('profile.delete') }}">
-        @csrf
-        <button type="submit" onclick="return confirm('Are you sure you want to delete your account?')">Delete Account</button>
+        <!-- Center Buttons -->
+        <div class="button-container">
+            <button type="button" class="edit-button" onclick="toggleEditForm()">Edit Profile</button>
+            <form method="POST" action="{{ route('profile.delete') }}">
+                @csrf
+                <button type="submit" onclick="return confirm('Are you sure you want to delete your account?')">Delete Account</button>
+            </form>
+        </div>
     </form>
 </div>
+
 
 <!-- Articles Section -->
 <div class="articles-section">

@@ -4,9 +4,6 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
-    <h1>About Us</h1>
-    <p>Welcome to the Lab Portal! This is a platform where PhD students and researchers can share and explore research articles.</p>
-
     <!-- Search and Filter Bar -->
     <form method="GET" action="<?php echo e(route('about')); ?>" class="search-form">
         <input type="text" name="search" placeholder="Search articles..." value="<?php echo e(request('search')); ?>">

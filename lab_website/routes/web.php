@@ -11,7 +11,7 @@ use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\MessageController;
-
+use App\Http\Controllers\NewsController;
 
 
 // Redirect / to the login page
@@ -81,3 +81,5 @@ Route::middleware('auth')->group(function () {
     Route::get('/messages/{receiver}', [MessageController::class, 'index'])->name('messages.chat');
     Route::post('/messages', [MessageController::class, 'store'])->name('messages.store');
 });
+
+Route::get('/news', [NewsController::class, 'index'])->name('news');

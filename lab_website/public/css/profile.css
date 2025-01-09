@@ -105,6 +105,36 @@ h1, h2 {
     margin-top: 20px;
 }
 
+/* Center Buttons */
+.button-container {
+    display: flex;
+    justify-content: center; /* Center the buttons horizontally */
+    align-items: center; /* Center the buttons vertically */
+    gap: 1rem; /* Space between buttons */
+    margin-top: 2rem; /* Add spacing above the buttons */
+}
+
+/* Edit and Delete Buttons Styling */
+button.edit-button,
+form button {
+    background: linear-gradient(135deg, #64FFDA, #3E92CC);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+}
+
+button.edit-button:hover,
+form button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 10px rgba(100, 255, 218, 0.5);
+}
+
+
+
 /* Edit Button Styling */
 button.edit-button {
     background: linear-gradient(135deg, #64FFDA, #3E92CC);
@@ -147,21 +177,19 @@ form textarea:focus {
 
 /* Form Submit Button */
 form button {
-    padding: 12px 20px;
-    background-color: #64FFDA;
+    background: linear-gradient(135deg, #64FFDA, #3E92CC);
+    color: white;
     border: none;
+    padding: 0.5rem 1rem;
     border-radius: 8px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: #0b192c;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
+    font-size: 1rem;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
 }
 
 form button:hover {
-    background-color: #52e6c6;
     transform: translateY(-3px);
-    box-shadow: 0 0 15px rgba(82, 230, 198, 0.7);
+    box-shadow: 0 0 10px rgba(100, 255, 218, 0.5);
 }
 
 /* Articles Section */
@@ -208,6 +236,12 @@ form button:hover {
     color: #3E92CC;
 }
 
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
 /* Responsive Design */
 @media screen and (max-width: 768px) {
     .profile-details {

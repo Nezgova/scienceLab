@@ -17,7 +17,13 @@
                     <i class="fas fa-newspaper"></i>
                     <span>Articles</span>
                 </a>
-                
+            </li>
+
+            <li>
+                <a href="<?php echo e(route('news')); ?>" class="<?php echo e(Request::routeIs('news') ? 'active' : ''); ?>">
+                    <i class="fas fa-bullhorn"></i>
+                    <span>News</span>
+                </a>
             </li>
 
             <li>
@@ -63,6 +69,5 @@
                 </ul>
             </div>
         </div>
-        
 </nav>
 <?php /**PATH C:\xampp\htdocs\scienceLab\lab_website\resources\views/components/navbar.blade.php ENDPATH**/ ?>

@@ -1,9 +1,12 @@
 /* General Reset */
+
+@import url('https://fonts.googleapis.com/css2?family=Advent+Pro:ital,wght@0,100..900;1,100..900&family=Bebas+Neue&family=Oswald:wght@200..700&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Arial', sans-serif;
+font-family: 'Oswald', sans-serif ;
 }
 
 /* Profile Page Styling */
@@ -19,6 +22,7 @@ h1 {
     margin: 2rem 0;
     color: #64FFDA;
     text-shadow: 0 0 15px rgba(100, 255, 218, 0.5);
+    
 }
 
 /* Profile Info Styling */

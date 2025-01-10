@@ -1,7 +1,12 @@
 /* General Styling */
+
+@import url('https://fonts.googleapis.com/css2?family=Advent+Pro:ital,wght@0,100..900;1,100..900&family=Bebas+Neue&family=Oswald:wght@200..700&display=swap');
+
+*{
+font-family: 'Oswald', sans-serif;
+}
 body {
     background-color: #0b192c;
-    font-family: 'Arial', sans-serif;
     color: #fff;
     margin: 0;
     padding: 0;

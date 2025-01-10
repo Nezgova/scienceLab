@@ -7,7 +7,6 @@
         <img src="<?php echo e(asset('images/lab-image.png')); ?>" alt="Lab Image">
     </div>
     <h1>Welcome to the Lab Portal</h1>
-    <p>This is your home page where you can browse and upload research articles.</p>
 
     <!-- Description Section -->
     <div class="page-descriptions">

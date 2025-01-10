@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Advent+Pro:ital,wght@0,100..900;1,100..900&family=Bebas+Neue&family=Oswald:wght@200..700&display=swap');
 
 * {
@@ -14,7 +13,6 @@ body {
     color: #D1E8FF;
     overflow-x: hidden;
 }
-
 /* Navbar Styling */
 .navbar {
     display: flex;
@@ -29,322 +27,310 @@ body {
     color: white;
 }
 
-/* Hero Section */
-h1 {
-    font-size: 3rem;
-    text-align: center;
-    margin: 2rem 0;
+/* Form Groups */
+.form-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+    width: 100%;
+}
+
+.form-group label {
+    display: block;
     color: #64FFDA;
-    text-shadow: 0 0 15px rgba(100, 255, 218, 0.5);
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
 }
 
-p {
-    text-align: center;
-    font-size: 1.5rem;
-    margin: 1rem 0;
-    line-height: 1.6;
-    color: #B0C4DE;
+.form-group input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 2px solid #3E92CC;
+    border-radius: 8px;
+    background: #1C2A44;
+    color: white;
+    font-size: 1rem;
+    transition: all 0.3s ease;
 }
 
-/* Search Bar Styling */
+.form-group input:focus {
+    border-color: #64FFDA;
+    box-shadow: 0 0 10px rgba(100, 255, 218, 0.2);
+    outline: none;
+}
+
+/* Search Form */
 .search-form {
     display: flex;
-    justify-content: center;
+    gap: 1rem;
     align-items: center;
+    background: rgba(28, 42, 68, 0.8);
+    padding: 1.5rem;
+    border-radius: 15px;
     margin: 2rem auto;
-    width: 100%;
-    max-width: 800px; /* Increased to accommodate the dropdown */
-    gap: 10px; /* Add spacing between elements */
+    max-width: 800px;
 }
-
 
 .search-form input[type="text"] {
     flex: 2;
-    padding: 10px;
+    padding: 0.8rem 1rem;
     border: 2px solid #3E92CC;
     border-radius: 8px;
-    background-color: #1C2A44;
+    background: #1C2A44;
     color: white;
     font-size: 1rem;
-    transition: border-color 0.3s, box-shadow 0.3s;
-    box-sizing: border-box;
-    height: calc(2em + 20px);
-}
-
-.search-form input[type="text"]::placeholder {
-    color: #B0C4DE;
 }
 
 .search-form input[type="text"]:focus {
     border-color: #64FFDA;
-    box-shadow: 0 0 10px #64FFDA;
+    box-shadow: 0 0 10px rgba(100, 255, 218, 0.2);
     outline: none;
 }
 
 .search-form select {
     flex: 1;
-    padding: 1rem;
+    padding: 0.8rem 1rem;
     border: 2px solid #3E92CC;
     border-radius: 8px;
-    background-color: #1C2A44;
+    background: #1C2A44;
     color: white;
     font-size: 1rem;
-    transition: border-color 0.3s, box-shadow 0.3s;
+    cursor: pointer;
 }
 
 .search-form select:focus {
     border-color: #64FFDA;
-    box-shadow: 0 0 8px #64FFDA;
     outline: none;
 }
 
 .search-form button {
-    padding: 0.9rem 1.5rem;
+    padding: 0.8rem 1.5rem;
     background: linear-gradient(135deg, #3E92CC, #64FFDA);
-    color: white;
+    color: #0B192C;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 1rem;
-    transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+    font-weight: bold;
+    transition: all 0.3s ease;
 }
 
 .search-form button:hover {
-    background: linear-gradient(135deg, #64FFDA, #3E92CC);
-    transform: scale(1.05);
-    box-shadow: 0 0 10px #64FFDA;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(100, 255, 218, 0.3);
 }
 
-
-/* Post Article Form Styling */
+/* Post Article Form */
 .post-article-form {
-    background: #112240;
-    border-radius: 15px;
+    background: rgba(17, 34, 64, 0.9);
     padding: 2rem;
+    border-radius: 15px;
     margin: 2rem auto;
     max-width: 600px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-    text-align: center;
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.post-article-form:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.8);
 }
 
 .post-article-form h2 {
-    font-size: 2rem;
     color: #64FFDA;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+}
+
+/* File Input Styling */
+input[type="file"] {
+    width: 100%;
+    padding: 0.8rem;
+    background: #1C2A44;
+    border: 2px dashed #3E92CC;
+    border-radius: 8px;
+    color: #B0C4DE;
+    cursor: pointer;
     margin-bottom: 1rem;
 }
 
-.post-article-form input[type="text"],
-.post-article-form input[type="url"] {
-    width: 80%;
-    padding: 0.8rem;
-    margin: 0.5rem auto;
-    border: 2px solid #3E92CC;
-    border-radius: 8px;
-    background: #1C2A44;
+input[type="file"]::-webkit-file-upload-button {
+    background: #3E92CC;
     color: white;
-    font-size: 1rem;
-    transition: border-color 0.3s, box-shadow 0.3s;
-}
-
-.post-article-form input[type="text"]:focus,
-.post-article-form input[type="url"]:focus {
-    border-color: #64FFDA;
-    box-shadow: 0 0 8px #64FFDA;
-    outline: none;
-}
-
-.post-article-form button {
-    background: linear-gradient(135deg, #3E92CC, #64FFDA);
-    color: white;
-    padding: 10px 20px;
+    padding: 0.5rem 1rem;
     border: none;
-    border-radius: 8px;
+    border-radius: 4px;
     cursor: pointer;
-    font-size: 1rem;
-    transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
-    margin-top: 1rem;
+    margin-right: 1rem;
 }
-
-.post-article-form button:hover {
-    background: linear-gradient(135deg, #64FFDA, #3E92CC);
-    transform: scale(1.05);
-    box-shadow: 0 0 12px #64FFDA;
-}
-
-/* Articles Section */
 
 /* Articles Grid */
 .articles-list {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Exactly 3 cards per row */
-    gap: 2rem; /* Spacing between cards */
-    justify-content: center; /* Center grid items horizontally */
-    align-items: start; /* Align grid items at the top */
-    max-width: 1200px; /* Optional: Set a maximum width */
-    margin: 0 auto; /* Center the grid container itself */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
 }
-
 
 /* Article Cards */
 .article {
-    background: #1C2A44;
+    background: rgba(28, 42, 68, 0.9);
     border-radius: 15px;
-    padding: 1rem;
-    max-width: 300px;
+    padding: 1.5rem;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Ensures consistent spacing */
-    align-items: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-    transition: transform 0.3s, box-shadow 0.3s;
-    height: 600px; /* Fixed height for uniformity */
+    gap: 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: auto;
+    min-height: 400px;
 }
 
 .article:hover {
     transform: translateY(-5px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.8);
-}
-
-.articles-section h2 {
-    font-size: 2.5rem; /* Adjust font size as needed */
-    text-align: center; /* Center the text */
-    color: #64FFDA; /* Vibrant color */
-    text-shadow: 
-        0 0 15px rgba(100, 255, 218, 0.5), 
-        0 0 25px rgba(100, 255, 218, 0.3), 
-        0 0 35px rgba(100, 255, 218, 0.2); /* Glowing effect */
-    margin-bottom: 2rem; /* Add spacing below the heading */
-    font-weight: bold; /* Make the text bold */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 .article img {
     width: 100%;
-    height: 200px; /* Fixed height */
-    object-fit: cover; /* Ensures images maintain aspect ratio while cropping overflow */
+    height: 200px;
+    object-fit: cover;
     border-radius: 10px;
-    margin-bottom: 1rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-    transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.article img:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.8);
-}
-
-/* Article Title */
 .article h3 {
     color: #64FFDA;
-    margin-bottom: 1rem;
-    text-align: center;
+    font-size: 1.5rem;
+    margin: 1rem 0;
 }
 
-/* Article Text */
 .article p {
     color: #B0C4DE;
+    font-size: 1rem;
     margin-bottom: 1rem;
-    text-align: center;
-    flex-grow: 1; /* Ensures the button stays at the bottom */
 }
 
-/* Article Button */
+/* Read Article Button */
 .article a {
-    padding: 0.75rem 1.5rem;
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
     background: linear-gradient(135deg, #3E92CC, #64FFDA);
-    color: white;
+    color: #0B192C;
     text-decoration: none;
     border-radius: 8px;
     font-weight: bold;
-    transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
     text-align: center;
+    transition: all 0.3s ease;
+    margin-top: auto;
+    cursor: pointer;
 }
 
 .article a:hover {
-    background: linear-gradient(135deg, #64FFDA, #3E92CC);
-    transform: scale(1.05);
-    box-shadow: 0 0 10px #64FFDA;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(100, 255, 218, 0.3);
 }
 
-/* Voting Section */
+/* Voting System */
 .vote-container {
     display: flex;
+    gap: 1rem;
     justify-content: center;
-    gap: 10px;
-    margin-top: 10px;
+    margin-top: 1rem;
 }
 
 .vote-btn {
+    padding: 0.5rem 1rem;
     background: linear-gradient(135deg, #3E92CC, #64FFDA);
-    color: white;
-    padding: 10px 15px;
+    color: #0B192C;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 1rem;
-    transition: transform 0.3s, box-shadow 0.3s;
+    font-weight: bold;
+    transition: all 0.3s ease;
 }
 
 .vote-btn:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 12px #64FFDA;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(100, 255, 218, 0.3);
+}
+
+.vote-btn.active-vote {
+    background: #64FFDA;
+    box-shadow: 0 0 10px rgba(100, 255, 218, 0.4);
 }
 
 .vote-count {
-    margin-top: 10px;
-    font-size: 1.2rem;
     color: #64FFDA;
+    font-size: 1rem;
+    text-align: center;
+    margin-top: 0.5rem;
 }
 
-/* Pagination Styling */
+/* Pagination */
 .pagination {
     display: flex;
     justify-content: center;
-    margin-top: 2rem;
+    gap: 1rem;
+    margin: 2rem 0;
 }
 
-.pagination a {
-    color: #64FFDA;
+.pagination > * {
     padding: 0.5rem 1rem;
+    background: #1C2A44;
+    color: #64FFDA;
     border-radius: 8px;
     text-decoration: none;
-    transition: background 0.3s, color 0.3s;
+    transition: all 0.3s ease;
 }
 
-.pagination a:hover {
+.pagination > *:hover {
     background: #64FFDA;
-    color: #112240;
-    box-shadow: 0 0 8px #64FFDA;
+    color: #0B192C;
 }
 
-/* Picture Input Styling */
-.post-article-form input[type="file"] {
-    width: 80%;
-    margin: 0.5rem auto;
-    padding: 0.8rem;
-    border: 2px dashed #3E92CC;
+/* Responsive Design */
+@media (max-width: 768px) {
+    .search-form {
+        flex-direction: column;
+        padding: 1rem;
+    }
+    
+    .search-form input[type="text"],
+    .search-form select,
+    .search-form button {
+        width: 100%;
+    }
+    
+    .articles-list {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+    }
+    
+    .post-article-form {
+        margin: 1rem;
+        padding: 1rem;
+    }
+}
+/* Post Article Button */
+.post-article-form button {
+    padding: 0.8rem 1.5rem;
+    background: linear-gradient(135deg, #3E92CC, #64FFDA);
+    color: #0B192C;
+    border: none;
     border-radius: 8px;
-    background: #1C2A44;
-    color: #B0C4DE;
-    font-size: 1rem;
     cursor: pointer;
-    transition: border-color 0.3s, background 0.3s;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    display: block; /* Ensures proper alignment */
+    margin: 1rem auto; /* Centers the button */
 }
 
-.post-article-form input[type="file"]:hover {
-    border-color: #64FFDA;
-    background: #112240;
+.post-article-form button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(100, 255, 218, 0.3);
 }
 
-.post-article-form input[type="file"]:focus {
-    outline: none;
-    border-color: #64FFDA;
-    background: #112240;
-    box-shadow: 0 0 8px #64FFDA;
+/* All Articles Title */
+.articles-section h2 {
+    text-align: center;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 2.5rem;
+    color: #64FFDA;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
-

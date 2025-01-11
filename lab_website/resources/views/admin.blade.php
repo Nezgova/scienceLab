@@ -10,9 +10,9 @@
 
 <!-- Navigation Tabs -->
 <div class="section-tabs">
-    <button class="section-tab" onclick="showSection('users')">Users</button>
-    <button class="section-tab" onclick="showSection('articles')">Articles</button>
-    <button class="section-tab" onclick="showSection('statistics')">Statistics</button>
+    <button class="section-tab" onclick="showSection('users')"><span>Users</span></button>
+<button class="section-tab" onclick="showSection('articles')"><span>Articles</span></button>
+<button class="section-tab" onclick="showSection('statistics')"><span>Statistics</span></button>
 </div>
 
 <!-- User Section -->

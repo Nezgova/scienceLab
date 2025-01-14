@@ -21,9 +21,9 @@ body {
 /* Enhanced Hero Section */
 .image-container {
     position: relative;
-    height: 400px;
+    height: 900px;
     overflow: hidden;
-    margin-bottom: 1rem;
+    margin: top 0px;
 }
 
 .image-container::before {

@@ -9,6 +9,17 @@
     <link href="{{ asset('css/login.css') }}" rel="stylesheet">
 </head>
 <body>
+    <div class="animated-background">
+        <div class="particles">
+            @for ($i = 0; $i < 30; $i++)
+                <div class="particle" style="
+                    left: {{ rand(0, 100) }}%;
+                    top: {{ rand(0, 100) }}%;
+                    animation-delay: -{{ rand(0, 30) }}s;
+                "></div>
+            @endfor
+        </div>
+    </div>
     <!-- Registration Box -->
     <div class="login-box">
         <h2>Register</h2>

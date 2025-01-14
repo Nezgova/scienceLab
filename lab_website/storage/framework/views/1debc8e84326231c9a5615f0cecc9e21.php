@@ -9,6 +9,17 @@
     <link href="<?php echo e(asset('css/login.css')); ?>" rel="stylesheet">
 </head>
 <body>
+    <div class="animated-background">
+        <div class="particles">
+            <?php for($i = 0; $i < 30; $i++): ?>
+                <div class="particle" style="
+                    left: <?php echo e(rand(0, 100)); ?>%;
+                    top: <?php echo e(rand(0, 100)); ?>%;
+                    animation-delay: -<?php echo e(rand(0, 30)); ?>s;
+                "></div>
+            <?php endfor; ?>
+        </div>
+    </div>
     <!-- Registration Box -->
     <div class="login-box">
         <h2>Register</h2>

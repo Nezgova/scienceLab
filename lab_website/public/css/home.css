@@ -23,7 +23,7 @@ body {
     position: relative;
     height: 400px;
     overflow: hidden;
-    margin-bottom: 3rem;
+    margin-bottom: 1rem;
 }
 
 .image-container::before {

@@ -8,10 +8,22 @@
     <link href="<?php echo e(asset('css/login.css')); ?>" rel="stylesheet">
 </head>
 <body>
-    <!-- Login box container -->
+    <div class="animated-background">
+        <div class="particles">
+            <?php for($i = 0; $i < 30; $i++): ?>
+                <div class="particle" style="
+                    left: <?php echo e(rand(0, 100)); ?>%;
+                    top: <?php echo e(rand(0, 100)); ?>%;
+                    animation-delay: -<?php echo e(rand(0, 30)); ?>s;
+                "></div>
+            <?php endfor; ?>
+        </div>
+    </div>
+    <!-- Login Box -->
     <div class="login-box">
         <h2>Login</h2>
 
+        <!-- Display Validation Errors -->
         <?php if($errors->any()): ?>
             <div style="color: red;">
                 <ul>
@@ -26,24 +38,27 @@
         <form action="<?php echo e(route('login.submit')); ?>" method="POST">
             <?php echo csrf_field(); ?>
 
+            <!-- Email -->
             <div class="user-box">
-                <input type="email" name="email" id="email" required value="<?php echo e(old('email')); ?>">
-                <label for="email">Email</label>
+                <input type="email" name="email" id="email" required>
+                <label>Email</label>
             </div>
 
+            <!-- Password -->
             <div class="user-box">
                 <input type="password" name="password" id="password" required>
-                <label for="password">Password</label>
+                <label>Password</label>
             </div>
 
-            <!-- Submit Button with Animations -->
-            <a href="javascript:void(0);" class="submit-button" onclick="document.querySelector('form').submit();">
-                <span></span><span></span><span></span><span></span>Login
+            <!-- Submit Button -->
+            <a href="javascript:void(0);" onclick="this.closest('form').submit()">
+                Login
+                <span></span><span></span><span></span><span></span>
             </a>
         </form>
 
+        <!-- Link to Register -->
         <p>Don't have an account? <a href="<?php echo e(route('register')); ?>">Register here</a>.</p>
     </div>
 </body>
-</html>
-<?php /**PATH C:\xampp\htdocs\scienceLab\lab_website\resources\views/auth/login.blade.php ENDPATH**/ ?>
+</html><?php /**PATH C:\xampp\htdocs\scienceLab\lab_website\resources\views/auth/login.blade.php ENDPATH**/ ?>

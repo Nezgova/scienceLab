@@ -334,3 +334,41 @@ input[type="file"]::-webkit-file-upload-button {
     text-transform: uppercase;
     letter-spacing: 2px;
 }
+
+
+/* Add Article Button Styling */
+.post-article-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    text-align: center;
+}
+
+.toggle-form-btn {
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #3E92CC, #64FFDA);
+    color: #0B192C;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    margin-bottom: 1rem;
+}
+
+.toggle-form-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(100, 255, 218, 0.3);
+}
+
+/* Form Animation */
+.post-article-form {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.3s ease;
+}
+
+.post-article-form.visible {
+    opacity: 1;
+    transform: translateY(0);
+}

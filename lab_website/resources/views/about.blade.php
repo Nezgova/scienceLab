@@ -23,7 +23,11 @@
     </form>
 
     <!-- Post New Article Form -->
-    <div class="post-article-form">
+    <!-- Add Article Button and Form -->
+<div class="post-article-container">
+    <button id="toggleArticleForm" class="toggle-form-btn">Add Article</button>
+    
+    <div class="post-article-form" id="articleForm" style="display: none;">
         <h2>Post a New Article</h2>
         <form method="POST" action="{{ route('about') }}" enctype="multipart/form-data">
             @csrf
@@ -42,6 +46,7 @@
             <button type="submit">Post Article</button>
         </form>
     </div>
+</div>
 
     <!-- Display All Articles as Cards -->
     <div class="articles-section">
@@ -125,5 +130,26 @@
             });
         });
     });
+
+    document.addEventListener("DOMContentLoaded", () => {
+    const toggleButton = document.getElementById("toggleArticleForm");
+    const articleForm = document.getElementById("articleForm");
+    
+    toggleButton.addEventListener("click", () => {
+        const isHidden = articleForm.style.display === "none";
+        
+        if (isHidden) {
+            articleForm.style.display = "block";
+            setTimeout(() => {
+                articleForm.classList.add("visible");
+            }, 10);
+        } else {
+            articleForm.classList.remove("visible");
+            setTimeout(() => {
+                articleForm.style.display = "none";
+            }, 300);
+        }
+    });
+});
 </script>
 @endsection

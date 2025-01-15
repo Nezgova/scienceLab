@@ -48,42 +48,52 @@
     </div>
 </div>
 
-    <!-- Display All Articles as Cards -->
-    <div class="articles-section">
-        <h2>All Articles</h2>
-        <div class="articles-list">
-            <?php if($articles->count()): ?>
-                <?php $__currentLoopData = $articles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $article): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <div class="article">
-                        <?php if($article->picture): ?>
-                            <img src="<?php echo e(asset('storage/' . $article->picture)); ?>" alt="Article Picture">
-                        <?php endif; ?>
-                        <h3><?php echo e($article->title); ?></h3>
-                        <p>Posted by <?php echo e($article->author->username); ?> on <?php echo e($article->created_at->format('F j, Y')); ?></p>
-                        <a href="<?php echo e($article->link); ?>" target="_blank">Read Article</a>
+ <!-- Display All Articles as Cards -->
+<div class="articles-section">
+    <h2>All Articles</h2>
+    <div class="articles-list">
+        <?php if($articles->count()): ?>
+            <?php $__currentLoopData = $articles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $article): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <div class="article">
+                    <?php if($article->picture): ?>
+                        <img src="<?php echo e(asset('storage/' . $article->picture)); ?>" alt="Article Picture">
+                    <?php endif; ?>
+                    <h3><?php echo e($article->title); ?></h3>
+                    
+                    
+                    <?php if($article->author): ?>
+                    <p>Posted by <?php echo e($article->author->name ?? 'Unknown User'); ?> on <?php echo e($article->created_at->format('F j, Y')); ?></p>
+                    <?php else: ?>
+                        <p>Posted by Unknown User on <?php echo e($article->created_at->format('F j, Y')); ?></p>
                         
-                        <!-- Voting System -->
-                        <div class="vote-container">
-                            <form action="<?php echo e(route('articles.upvote', $article->id)); ?>" method="POST" class="vote-form" data-id="<?php echo e($article->id); ?>">
-                                <?php echo csrf_field(); ?>
-                                <button type="submit" class="vote-btn upvote-btn <?php echo e($article->userVote(auth()->id())?->vote === 1 ? 'active-vote' : ''); ?>">Upvote</button>
-                            </form>
-                            <form action="<?php echo e(route('articles.downvote', $article->id)); ?>" method="POST" class="vote-form" data-id="<?php echo e($article->id); ?>">
-                                <?php echo csrf_field(); ?>
-                                <button type="submit" class="vote-btn downvote-btn <?php echo e($article->userVote(auth()->id())?->vote === -1 ? 'active-vote' : ''); ?>">Downvote</button>
-                            </form>
-                        </div>
-                        <p class="vote-count" data-id="<?php echo e($article->id); ?>">
-                            Votes: <?php echo e($article->userVotes->sum('vote')); ?>
+                        <small style="color: red;">Debug: author_id = <?php echo e($article->author_id); ?></small>
+                    <?php endif; ?>
+                    
+                    <a href="<?php echo e($article->link); ?>" target="_blank">Read Article</a>
 
-                        </p>
+                    <!-- Voting System -->
+                    <div class="vote-container">
+                        <form action="<?php echo e(route('articles.upvote', $article->id)); ?>" method="POST" class="vote-form" data-id="<?php echo e($article->id); ?>">
+                            <?php echo csrf_field(); ?>
+                            <button type="submit" class="vote-btn upvote-btn <?php echo e($article->userVote(auth()->id())?->vote === 1 ? 'active-vote' : ''); ?>">Upvote</button>
+                        </form>
+                        <form action="<?php echo e(route('articles.downvote', $article->id)); ?>" method="POST" class="vote-form" data-id="<?php echo e($article->id); ?>">
+                            <?php echo csrf_field(); ?>
+                            <button type="submit" class="vote-btn downvote-btn <?php echo e($article->userVote(auth()->id())?->vote === -1 ? 'active-vote' : ''); ?>">Downvote</button>
+                        </form>
                     </div>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-            <?php else: ?>
-                <p>No articles found.</p>
-            <?php endif; ?>
-        </div>
+                    <p class="vote-count" data-id="<?php echo e($article->id); ?>">
+                        Votes: <?php echo e($article->userVotes->sum('vote')); ?>
+
+                    </p>
+                </div>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        <?php else: ?>
+            <p>No articles available.</p>
+        <?php endif; ?>
     </div>
+</div>
+
 
     <!-- Pagination -->
     <div class="pagination">

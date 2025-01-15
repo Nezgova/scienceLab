@@ -48,41 +48,51 @@
     </div>
 </div>
 
-    <!-- Display All Articles as Cards -->
-    <div class="articles-section">
-        <h2>All Articles</h2>
-        <div class="articles-list">
-            @if($articles->count())
-                @foreach($articles as $article)
-                    <div class="article">
-                        @if($article->picture)
-                            <img src="{{ asset('storage/' . $article->picture) }}" alt="Article Picture">
-                        @endif
-                        <h3>{{ $article->title }}</h3>
-                        <p>Posted by {{ $article->author->username }} on {{ $article->created_at->format('F j, Y') }}</p>
-                        <a href="{{ $article->link }}" target="_blank">Read Article</a>
-                        
-                        <!-- Voting System -->
-                        <div class="vote-container">
-                            <form action="{{ route('articles.upvote', $article->id) }}" method="POST" class="vote-form" data-id="{{ $article->id }}">
-                                @csrf
-                                <button type="submit" class="vote-btn upvote-btn {{ $article->userVote(auth()->id())?->vote === 1 ? 'active-vote' : '' }}">Upvote</button>
-                            </form>
-                            <form action="{{ route('articles.downvote', $article->id) }}" method="POST" class="vote-form" data-id="{{ $article->id }}">
-                                @csrf
-                                <button type="submit" class="vote-btn downvote-btn {{ $article->userVote(auth()->id())?->vote === -1 ? 'active-vote' : '' }}">Downvote</button>
-                            </form>
-                        </div>
-                        <p class="vote-count" data-id="{{ $article->id }}">
-                            Votes: {{ $article->userVotes->sum('vote') }}
-                        </p>
+ <!-- Display All Articles as Cards -->
+<div class="articles-section">
+    <h2>All Articles</h2>
+    <div class="articles-list">
+        @if($articles->count())
+            @foreach($articles as $article)
+                <div class="article">
+                    @if($article->picture)
+                        <img src="{{ asset('storage/' . $article->picture) }}" alt="Article Picture">
+                    @endif
+                    <h3>{{ $article->title }}</h3>
+                    
+                    {{-- Debug information --}}
+                    @if($article->author)
+                    <p>Posted by {{ $article->author->name ?? 'Unknown User' }} on {{ $article->created_at->format('F j, Y') }}</p>
+                    @else
+                        <p>Posted by Unknown User on {{ $article->created_at->format('F j, Y') }}</p>
+                        {{-- Debug output --}}
+                        <small style="color: red;">Debug: author_id = {{ $article->author_id }}</small>
+                    @endif
+                    
+                    <a href="{{ $article->link }}" target="_blank">Read Article</a>
+
+                    <!-- Voting System -->
+                    <div class="vote-container">
+                        <form action="{{ route('articles.upvote', $article->id) }}" method="POST" class="vote-form" data-id="{{ $article->id }}">
+                            @csrf
+                            <button type="submit" class="vote-btn upvote-btn {{ $article->userVote(auth()->id())?->vote === 1 ? 'active-vote' : '' }}">Upvote</button>
+                        </form>
+                        <form action="{{ route('articles.downvote', $article->id) }}" method="POST" class="vote-form" data-id="{{ $article->id }}">
+                            @csrf
+                            <button type="submit" class="vote-btn downvote-btn {{ $article->userVote(auth()->id())?->vote === -1 ? 'active-vote' : '' }}">Downvote</button>
+                        </form>
                     </div>
-                @endforeach
-            @else
-                <p>No articles found.</p>
-            @endif
-        </div>
+                    <p class="vote-count" data-id="{{ $article->id }}">
+                        Votes: {{ $article->userVotes->sum('vote') }}
+                    </p>
+                </div>
+            @endforeach
+        @else
+            <p>No articles available.</p>
+        @endif
     </div>
+</div>
+
 
     <!-- Pagination -->
     <div class="pagination">

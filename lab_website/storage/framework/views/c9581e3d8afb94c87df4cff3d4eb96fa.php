@@ -68,6 +68,7 @@
                     </li>
                 </ul>
             </div>
+            
         </div>
 </nav>
 <?php /**PATH C:\xampp\htdocs\scienceLab\lab_website\resources\views/components/navbar.blade.php ENDPATH**/ ?>

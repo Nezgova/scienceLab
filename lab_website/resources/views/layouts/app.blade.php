@@ -6,6 +6,7 @@
         <link href="{{ asset('css/home.css') }}" rel="stylesheet">  <!-- Home CSS -->
         <link href="{{ asset('css/navbar.css') }}" rel="stylesheet"> 
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+        <link rel="shortcut icon" href="{{ asset('images/LOGO.png') }}" type="image/x-icon">
 <!-- Navbar CSS -->
         @yield('styles') <!-- profile.css or other styles will load here -->
 

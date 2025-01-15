@@ -6,6 +6,7 @@
         <link href="<?php echo e(asset('css/home.css')); ?>" rel="stylesheet">  <!-- Home CSS -->
         <link href="<?php echo e(asset('css/navbar.css')); ?>" rel="stylesheet"> 
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+        <link rel="shortcut icon" href="<?php echo e(asset('images/LOGO.png')); ?>" type="image/x-icon">
 <!-- Navbar CSS -->
         <?php echo $__env->yieldContent('styles'); ?> <!-- profile.css or other styles will load here -->
 

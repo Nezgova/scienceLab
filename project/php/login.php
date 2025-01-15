@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <div class="user-box">
                 <input type="password" name="password" required>
-                <label>Password</label>
+                <label>Password WAAAAAAAAAAAAAAAAA  </label>
             </div>
             <a href="#" onclick="this.closest('form').submit(); return false;">
                 <span></span>

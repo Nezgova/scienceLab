@@ -133,31 +133,40 @@
 .profile-btn {
     background: none;
     border: none;
-    padding: 4px;
+    padding: 0;
     cursor: pointer;
     position: relative;
-    transform-style: preserve-3d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px; /* Uniform size for the button */
+    height: 50px;
+    border-radius: 50%; /* Ensure the button is circular */
+    overflow: hidden; /* Ensures the image does not overflow the button */
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background: linear-gradient(45deg, #64ffda, #0a1929); /* Add gradient border effect */
 }
 
 .profile-btn:hover {
-    transform: translateZ(20px) rotateY(10deg);
+    transform: translateZ(10px) rotateY(5deg);
+    box-shadow: 0 0 20px rgba(100, 255, 218, 0.3),
+                0 0 40px rgba(100, 255, 218, 0.1);
 }
 
 .profile-btn img {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    border: 2px solid transparent;
-    background: linear-gradient(45deg, #64ffda, #0a1929) border-box;
-    transition: all 0.4s ease;
+    width: 100%; /* Fill the button fully */
+    height: 100%;
+    object-fit: cover; /* Ensures the image scales without distortion */
+    display: block; /* Remove inline gaps */
+    border-radius: 50%; /* Ensures the image is circular */
+    transition: all 0.3s ease;
 }
 
 .profile-btn:hover img {
-    box-shadow: 
-        0 0 20px rgba(100, 255, 218, 0.3),
-        0 0 40px rgba(100, 255, 218, 0.1);
+    transform: scale(1.1); /* Slight zoom effect on hover */
+    box-shadow: none; /* Prevent additional shadows */
 }
+
 /* Enhanced Dropdown Menu */
 .dropdown-menu {
     position: absolute;

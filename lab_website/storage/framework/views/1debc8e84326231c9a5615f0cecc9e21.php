@@ -7,6 +7,8 @@
     <title>Register</title>
     <!-- Link to the CSS file -->
     <link href="<?php echo e(asset('css/login.css')); ?>" rel="stylesheet">
+    <link rel="shortcut icon" href="<?php echo e(asset('images/LOGO.png')); ?>" type="image/x-icon">
+
 </head>
 <body>
     <div class="animated-background">
